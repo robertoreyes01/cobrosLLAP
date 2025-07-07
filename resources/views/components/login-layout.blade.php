@@ -1,86 +1,67 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     @vite('resources/css/app.css')
     <title>Sistema de Gestión de Pagos y Cobros LLAP</title>
+
+    <!-- Bootstrap y Basecoat para estilos adicionales -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-LN+7fdVzj6u52u30Kp6M/trliBMCMKTyK833zpbD+pXdCLuTusPj697FH4R/5mcr" crossorigin="anonymous">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/basecoat-css@0.2.8/dist/basecoat.cdn.min.css">
     <script src="https://cdn.jsdelivr.net/npm/basecoat-css@0.2.8/dist/js/all.min.js" defer></script>
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        body {
-            margin: 0;
-            padding: 0;
-        }
-
-        .banner {
-            background-color: #751711;
-            width: 100%;
-            padding: 20px 0;
-        }
-
-        .banner-content {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 0 20px;
-        }
-
-        .banner-content-logo img {
-            display: block;
-            margin: 0 auto;
-            width: 100px;
-            height: 100px;
-        }
-
-        .banner-content-title h1 {
-            color: #fff;
-            text-align: center;
-            margin-top: 10px;
-        }
-
-        .banner-content-subtitle h3 {
-            color: #fff;
-            text-align: center;
-            margin-top: 10px;
-        }
-    </style>
+    {!! ToastMagic::styles() !!}
 </head>
 
-<body>
+<body class="m-0 p-0">
+    <!--
+        Layout principal para la página de login.
+        Incluye un banner institucional, espacio para el contenido del formulario de login y pie de página.
+    -->
     <header>
-        <div class="banner">
-            <div class="banner-content">
-                <div class="banner-content-logo">
-                    <img src="{{ asset('img/logollap.png') }}" alt="logo">
+        <!-- Banner institucional con logo, título y subtítulo -->
+        <div class="w-full bg-[#751711] py-2">
+            <div class="flex flex-row-reverse pr-5">
+                <div>
+                    <form action="{{route('signInForm')}}">
+                        <button class="btn bg-[#126F75] text-white">Registrarse</button>
+                    </form>
                 </div>
-                <div class="banner-content-title">
-                    <h1>Liceo Profesor Luis Alfonso Pino</h1>
+                <div>
+                    <form action="{{route('loginForm')}}">
+                        <button class="btn bg-[#126F75] text-white">Iniciar sesión</button>
+                    </form>
                 </div>
-                <div class="banner-content-subtitle">
-                    <h3>Sistema de Gestión de Pagos y Cobros</h3>
+            </div>
+            <div class="max-w-[1200px] mx-auto px-4">
+                <div class="flex flex-col items-center">
+                    <!-- Logo del liceo -->
+                    <div class="mb-2">
+                        <img src="{{ asset('img/logollap.png') }}" alt="logo"
+                            class="block mx-auto w-[100px] h-[100px]">
+                    </div>
+                    <!-- Título principal -->
+                    <div class="mb-2">
+                        <h1 class="text-white text-center mt-2 text-2xl font-bold">Liceo Profesor Luis Alfonso Pino</h1>
+                    </div>
+                    <!-- Subtítulo del sistema -->
+                    <div>
+                        <h3 class="text-white text-center mt-2 text-lg">Sistema de Gestión de Pagos y Cobros</h3>
+                    </div>
                 </div>
             </div>
         </div>
     </header>
-    <div class="login-wrapper">
-        {{-- @yield('content') --}}
+    <!-- Contenedor para el contenido dinámico del login (slot) -->
+    <div class="container">
         {{ $slot }}
     </div>
 
     <footer>
     </footer>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/js/bootstrap.bundle.min.js"
-        integrity="sha384-ndDqU0Gzau9qJ1lfW4pNLlhNTkCfHzAVBReH9diLvGRem5+R9g2FzA8ZGN954O5Q" crossorigin="anonymous">
-    </script>
+    {!! ToastMagic::scripts() !!}
 </body>
 
 </html>

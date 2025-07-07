@@ -7,19 +7,29 @@ use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Illuminate\Support\Facades\Auth;
 
+/**
+ * Middleware para verificar el tipo de usuario autenticado.
+ *
+ * Si el usuario autenticado tiene el rol especificado, lo redirige a la ruta de pagos principal.
+ */
 class CheckUserType
 {
-    // /**
-    //  * Handle an incoming request.
-    //  *
-    //  * @param  \Closure(\Illuminate\Http\Request): (\Symfony\Component\HttpFoundation\Response)  $next
-    //  */
-
+    /**
+     * Maneja una solicitud entrante y verifica el tipo de usuario.
+     *
+     * @param  \Illuminate\Http\Request  $request  La solicitud HTTP entrante.
+     * @param  \Closure  $next  El siguiente middleware o controlador.
+     * @param  mixed  $type  El tipo de rol requerido para acceder.
+     * @return \Symfony\Component\HttpFoundation\Response
+     */
     public function handle(Request $request, Closure $next, $type): Response
     {
-        if(Auth::guard('usuario')->check() && Auth::guard('usuario')->user()->id_rol == $type) {
-            return redirect()->route('pagos/principal');
+        // Verifica si el usuario autenticado con el guard 'usuario' tiene el rol requerido
+        if(Auth::guard('usuario')->check() && Auth::guard('usuario')->user()->id_rol != $type) {
+            // Si el usuario tiene el rol, lo redirige a la página principal de pagos
+            return redirect()->route('main');
         }
+        // Si no, continúa con la solicitud
         return $next($request);
     }
 }

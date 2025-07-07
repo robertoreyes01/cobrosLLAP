@@ -8,7 +8,6 @@
     <title>Sistema de Gestión de Pagos y Cobros LLAP</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/basecoat-css@0.2.8/dist/basecoat.cdn.min.css">
     <script src="{{ asset('js/basecoat/basecoat-css/dist/js/all.js') }}" defer></script>
-    {!! ToastMagic::styles() !!}
 </head>
 
 <body class="m-0 p-0">
@@ -47,10 +46,13 @@
                                             Menú Principal
                                         </button>
                                     </form>
-                                    <div role="menuitem">
-                                        Perfil
-                                        <span class="text-muted-foreground text-xs tracking-widest"></span>
-                                    </div>
+                                    <form action="{{ route('perfil.show') }}" method="GET">
+                                        @csrf
+                                        <button class="btn-ghost" type="submit" role="menuitem"
+                                            class="text-muted-foreground-white ml-auto text-xs tracking-widest">
+                                            Perfil
+                                        </button>
+                                    </form>
                                     @if (Auth::user()->id_rol == 3)
                                         <div role="menuitem">
                                             Ver Pagos
@@ -91,13 +93,7 @@
                             </div>
                         </div>
                     </div>
-                    @if (Auth::user()->id_rol == 3)
-                    <h3 class="text-white text-2xl font-semibold pl-5">Gestión de Pagos</h3>
-                    @elseif (Auth::user()->id_rol == 2)
-                    <h3 class="text-white text-2xl font-semibold pl-5">Gestión de Cobros</h3>
-                    @elseif (Auth::user()->id_rol == 1)
-                    <h3 class="text-white text-2xl font-semibold pl-5">Administración</h3>
-                    @endif
+                    <h3 class="text-white text-2xl font-semibold pl-5">Menú Principal</h3>
                 </div>
                 <div class="col-start-3">
                     <img src="{{ asset('img/logollap.png') }}" alt="logo" class="block mx-auto w-15 h-15">
@@ -114,6 +110,6 @@
     </div>
     <footer></footer>
     </script>
-    {!! ToastMagic::scripts() !!}
 </body>
+
 </html>

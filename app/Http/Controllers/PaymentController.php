@@ -7,13 +7,9 @@ use Illuminate\Support\Facades\Hash;
 
 class PaymentController extends Controller
 {
-    // public function __construct()
-    // {
-    //     $this->middleware('auth:usuario');
-    // }
-
-    public function show()
+    public function __construct()
     {
-        return view('payments.principal');
-    }   
+        $this->middleware('auth:usuario');
+    }
+
 }
