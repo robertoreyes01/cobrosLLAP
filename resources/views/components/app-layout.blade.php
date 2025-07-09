@@ -41,16 +41,17 @@
                                 aria-labelledby="demo-dropdown-menu-trigger">
                                 <div role="group" aria-labelledby="account-options">
                                     <form action="{{ route('main') }}" method="GET">
-                                        @csrf
                                         <button class="btn-ghost" type="submit" role="menuitem"
                                             class="text-muted-foreground-white ml-auto text-xs tracking-widest">
                                             Menú Principal
                                         </button>
                                     </form>
-                                    <div role="menuitem">
-                                        Perfil
-                                        <span class="text-muted-foreground text-xs tracking-widest"></span>
-                                    </div>
+                                    <form action="{{ route('profile.show') }}" method="GET">
+                                        <button class="btn-ghost" type="submit" role="menuitem"
+                                            class="text-muted-foreground-white ml-auto text-xs tracking-widest">
+                                            Perfil
+                                        </button>
+                                    </form>
                                     @if (Auth::user()->id_rol == 3)
                                         <div role="menuitem">
                                             Ver Pagos
@@ -83,7 +84,7 @@
                                 <hr role="separator" />
                                 <form action="{{ route('logout') }}" method="POST">
                                     @csrf
-                                    <button type="submit" role="menuitem"
+                                    <button class="btn-ghost" type="submit" role="menuitem"
                                         class="text-muted-foreground-white ml-auto text-xs tracking-widest">
                                         Cerrar Sesión
                                     </button>

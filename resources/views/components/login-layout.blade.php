@@ -24,14 +24,20 @@
         <!-- Banner institucional con logo, título y subtítulo -->
         <div class="w-full bg-[#751711] py-2">
             <div class="flex flex-row-reverse pr-5">
-                <div>
-                    <form action="{{route('signInForm')}}">
-                        <button class="btn bg-[#126F75] text-white">Registrarse</button>
+                <div class="m-1">
+                    <form action="{{ route('signInForm') }}">
+                        <button
+                            class="py-1 px-3 rounded outline-solid bg-[#751711] hover:bg-[#5c120e] text-sm text-white font-semibold transition-colors duration-200 cursor-pointer">
+                            Registrarse
+                        </button>
                     </form>
                 </div>
-                <div>
-                    <form action="{{route('loginForm')}}">
-                        <button class="btn bg-[#126F75] text-white">Iniciar sesión</button>
+                <div class="m-1">
+                    <form action="{{ route('loginForm') }}">
+                        <button
+                            class="py-1 px-3 rounded outline-solid bg-[#751711] hover:bg-[#5c120e] text-sm text-white font-semibold transition-colors duration-200 cursor-pointer">
+                            Iniciar sesión
+                        </button>
                     </form>
                 </div>
             </div>
@@ -63,5 +69,4 @@
     </footer>
     {!! ToastMagic::scripts() !!}
 </body>
-
 </html>

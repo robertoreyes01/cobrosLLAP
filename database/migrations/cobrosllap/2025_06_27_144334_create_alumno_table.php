@@ -15,10 +15,9 @@ return new class extends Migration
 
         Schema::create('alumno', function (Blueprint $table) {
             $table->increments('id_alumno');
-            $table->foreign('id_alumno')->references('id_alumno')->on('padre');
             $table->string('nombres', 50);
             $table->string('apellidos', 50);
-            $table->integer('id_seccion')->unique();
+            $table->unsignedInteger('id_seccion')->index();
             $table->foreign('id_seccion')->references('id_seccion')->on('seccion');
         });
 

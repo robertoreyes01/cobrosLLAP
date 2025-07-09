@@ -19,7 +19,7 @@ return new class extends Migration
             $table->decimal('total');
             $table->date('fecha');
             $table->string('lugar', 50);
-            $table->integer('id_alumno')->unique();
+            $table->unsignedInteger('id_alumno')->index();
             $table->foreign('id_alumno')->references('id_alumno')->on('alumno');
         });
 

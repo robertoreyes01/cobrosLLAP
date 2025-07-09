@@ -6,10 +6,12 @@ use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Str;
 
+use function Laravel\Prompts\password;
+
 /**
- * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\User>
+ * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\usuario>
  */
-class UserFactory extends Factory
+class UsuarioFactory extends Factory
 {
     /**
      * The current password being used by the factory.
@@ -24,11 +26,14 @@ class UserFactory extends Factory
     public function definition(): array
     {
         return [
-            'name' => fake()->name(),
-            'email' => fake()->unique()->safeEmail(),
-            'email_verified_at' => now(),
-            'password' => static::$password ??= Hash::make('password'),
-            'remember_token' => Str::random(10),
+            'primer_nombre' => $this->faker->firstName(),
+            'segundo_nombre' => $this->faker->firstName(),
+            'primer_apellido' => $this->faker->lastName(),
+            'segundo_apellido' => $this->faker->lastName(),
+            'correo' => $this->faker->unique()->safeEmail(),
+            'password' => Hash::make('Asdfgh!1'),
+            'estado' => $this->faker->randomElement(['1', '0']),
+            'id_rol' => $this->faker->numberBetween(1, 3)
         ];
     }
 

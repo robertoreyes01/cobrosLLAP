@@ -4,12 +4,23 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Foundation\Auth\User as Authenticatable;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 /**
  * Modelo de usuario para la autenticación y gestión de usuarios en la aplicación.
  *
  * Representa la tabla 'usuario' en la base de datos.
  * Extiende de Authenticatable para integrarse con el sistema de autenticación de Laravel.
+ *
+ * @property int $id_usuario         Identificador único del usuario (PK)
+ * @property string $primer_nombre   Primer nombre del usuario
+ * @property string $segundo_nombre  Segundo nombre del usuario
+ * @property string $primer_apellido Primer apellido del usuario
+ * @property string $segundo_apellido Segundo apellido del usuario
+ * @property string $correo          Correo electrónico del usuario
+ * @property string $password        Contraseña hasheada del usuario
+ * @property string $estado          Estado del usuario (activo/inactivo)
+ * @property int $id_rol             ID de rol asociado al usuario
  */
 class usuario extends Authenticatable
 {
@@ -33,15 +44,14 @@ class usuario extends Authenticatable
      * @var array<int, string>
      */
     protected $fillable = [
-        
-        'primer_nombre',      // Primer nombre del usuario
-        'segundo_nombre',     // Segundo nombre del usuario
-        'primer_apellido',    // Primer apellido del usuario
-        'segundo_apellido',   // Segundo apellido del usuario
-        'correo',             // Correo electrónico del usuario
-        'password',           // Contraseña del usuario (hasheada)
-        'estado',             // Estado del usuario (activo/inactivo)
-        'id_rol',             // ID de rol asociado al usuario
+        'primer_nombre',      
+        'segundo_nombre',     
+        'primer_apellido',    
+        'segundo_apellido',   
+        'correo',             
+        'password',           
+        'estado',             
+        'id_rol',             
     ];
 
     /**
@@ -50,13 +60,13 @@ class usuario extends Authenticatable
      * @var array<int, string>
      */
     protected $hidden = [
-        'password', // Oculta la contraseña al serializar el modelo
+        'password', 
     ];
 
     /**
      * Obtiene la contraseña del usuario para la autenticación.
      *
-     * @return string
+     * @return string Contraseña hasheada
      */
     public function getAuthPassword()
     {
@@ -66,7 +76,7 @@ class usuario extends Authenticatable
     /**
      * Obtiene el nombre de la columna que se usa para la autenticación.
      *
-     * @return string
+     * @return string Nombre de la columna identificadora
      */
     public function getAuthIdentifierName()
     {
@@ -76,12 +86,19 @@ class usuario extends Authenticatable
     /**
      * Obtiene el valor del identificador de autenticación.
      *
-     * @return mixed
+     * @return mixed Valor del identificador
      */
     public function getAuthIdentifier()
     {
         return $this->getAttribute($this->getAuthIdentifierName());
     }
 
+    /**
+     * Clave primaria de la tabla.
+     *
+     * @var string
+     */
     protected $primaryKey = 'id_usuario';
+
+    use HasFactory;
 }

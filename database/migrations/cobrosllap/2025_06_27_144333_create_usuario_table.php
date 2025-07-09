@@ -17,12 +17,12 @@ return new class extends Migration
             $table->increments('id_usuario');
             $table->string('primer_nombre', 20);
             $table->string('segundo_nombre', 20);
-            $table->string('primer_apeliido', 20);
+            $table->string('primer_apellido', 20);
             $table->string('segundo_apellido', 20);
             $table->string('correo', 100);
-            $table->string('contraseña', 20);
+            $table->string('password', 225);
             $table->boolean('estado');
-            $table->integer('id_rol')->unique();
+            $table->unsignedInteger('id_rol')->index();
             $table->foreign('id_rol')->references('id_rol')->on('rol');
         });
 

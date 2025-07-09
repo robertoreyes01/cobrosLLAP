@@ -1,8 +1,8 @@
 <x-app-layout>
     <div class="place-items-center">
-        <div class="card w-80 mt-10">
+        <div class="card w-100 mt-10">
             <header>
-                <h2 class="text-2xl font-bold text-center">Informacion de perfil</h2>
+                <h2 class="text-2xl font-bold">Información de perfil</h2>
             </header>
             <section>
                 <div class="grid grid-cols-3 grid-rows-2 gap-1">
@@ -24,9 +24,9 @@
                     </div>
                 </div>
             </section>
-            <footer class="flex justify-center">
+            <footer>
                 <button
-                    class="rounded-sm py-1 px-3 bg-[#751711] hover:bg-[#5c120e] text-white font-semibold transition-colors duration-200 cursor-pointer"
+                    class="w-43 rounded-sm py-1 px-3 bg-[#751711] hover:bg-[#5c120e] text-white font-semibold transition-colors duration-200 cursor-pointer"
                     type="button" onclick="document.getElementById('edit-profile').showModal()">Editar Perfil</button>
             </footer>
 
@@ -38,7 +38,7 @@
                             cambios.</p>
                     </header>
                     <section>
-                        <form id="edit-profile-form" action="{{ route('perfil.update', Auth::user()->id_usuario) }}"
+                        <form id="edit-profile-form" action="{{ route('profile.update', Auth::user()->id_usuario) }}"
                             method="POST" class="form grid grid-cols-2 grid-rows-2 gap-4">
                             @csrf
                             @method('PUT')
@@ -68,7 +68,8 @@
                         <button class="btn-outline" onclick="this.closest('dialog').close()">Cancelar</button>
                         <button
                             class="rounded-sm py-1 px-3 bg-[#751711] hover:bg-[#5c120e] text-sm text-white font-semibold transition-colors duration-200 cursor-pointer"
-                            onclick="document.getElementById('edit-profile-form').submit()" type="submit" form="edit-profile-form">
+                            onclick="document.getElementById('edit-profile-form').submit()" type="submit"
+                            form="edit-profile-form">
                             Guardar Cambios
                         </button>
                     </footer>
@@ -85,6 +86,157 @@
                 </article>
             </dialog>
         </div>
+
+        <div class="card w-100 mt-10">
+            <header>
+                <h2 class="text-2xl font-bold">Cuenta</h2>
+            </header>
+            <section>
+                <div class="grid grid-cols-3 grid-rows-1 gap-4">
+                    <div class="text-sm font-bold">Correo Electrónico:</div>
+                    <div class="col-span-2 text-sm content-around">{{ Auth::user()->correo }}</div>
+                </div>
+            </section>
+            <footer class="grid grid-cols-1 grid-rows-3">
+                <div class="mb-0">
+                    <button
+                        class="w-43 rounded-sm py-1 px-3 bg-[#751711] hover:bg-[#5c120e] text-white font-semibold transition-colors duration-200 cursor-pointer"
+                        type="button" onclick="document.getElementById('change-email').showModal()">
+                        Cambiar Correo
+                    </button>
+                </div>
+                <div class="mb-6">
+                    <button
+                        class="w-43 rounded-sm py-1 px-3 bg-[#751711] hover:bg-[#5c120e] text-white font-semibold transition-colors duration-200 cursor-pointer"
+                        type="button" onclick="document.getElementById('change-password').showModal()">
+                        Cambiar Contraseña
+                    </button>
+                </div>
+                <div class="mt-6">
+                    <button class="w-43 rounded-sm py-1 px-3 bg-red-600 hover:bg-red-800 text-white font-semibold transition-colors duration-200 cursor-pointer"
+                    type="button" onclick="document.getElementById('delete-account').showModal()">
+                        Eliminar Cuenta
+                    </button>
+                </div>
+            </footer>
+
+            <dialog id="change-email" class="dialog w-full sm:max-w-[425px] max-h-[612px]" onclick="this.close()">
+                <article onclick="event.stopPropagation()">
+                    <header>
+                        <h2>Cambiar Correo</h2>
+                        <p>Ingresa el nuevo correo electrónico para tu cuenta.</p>
+                    </header>
+                    <section>
+                        <form method="POST" id="change-email-form" class="form"
+                            action="{{ route('change.email', Auth::user()->id_usuario) }}">
+                            @csrf
+                            @method('PUT')
+                            <div>
+                                <label for="new_email">Nuevo Correo</label>
+                                <input type="email" name="nuevo_correo" id="new_email" placeholder="nuevo@correo.com">
+                            </div>
+                        </form>
+                    </section>
+                    <footer>
+                        <button class="btn-outline" onclick="this.closest('dialog').close()">Cancelar</button>
+                        <button
+                            class="rounded-sm py-1 px-3 bg-[#751711] hover:bg-[#5c120e] text-sm text-white font-semibold transition-colors duration-200 cursor-pointer"
+                            onclick="document.getElementById('change-email-form').submit()" type="submit"
+                            form="change-email-form">
+                            Confirmar Cambios
+                        </button>
+                    </footer>
+                    <form method="dialog">
+                        <button aria-label="Close dialog">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+                                viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                                stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-x-icon lucide-x">
+                                <path d="M18 6 6 18" />
+                                <path d="m6 6 12 12" />
+                            </svg>
+                        </button>
+                    </form>
+                </article>
+            </dialog>
+
+            <dialog id="change-password" class="dialog w-full sm:max-w-[425px] max-h-[612px]" onclick="this.close()">
+                <article onclick="event.stopPropagation()">
+                    <header>
+                        <h2>Cambiar contraseña</h2>
+                        <p>Ingresa la nueva contraseña para tu cuenta.</p>
+                    </header>
+                    <section>
+                        <form method="POST" id="change-password-form" class="form"
+                            action="{{ route('change.password', Auth::user()->id_usuario) }}">
+                            @csrf
+                            @method('PUT')
+                            <div class="m-3">
+                                <label for="new_password">Nueva Contraseña</label>
+                                <input type="password" name="nueva_contraseña" id="new_password" placeholder="********">
+                            </div>
+                            <div class="m-3">
+                                <label for="new_password_confirmation">Confirmar Contraseña</label>
+                                <input type="password" name="nueva_contraseña_confirmation" id="new_password_confirmation" placeholder="********">
+                            </div>
+                        </form>
+                    </section>
+                    <footer>
+                        <button class="btn-outline" onclick="this.closest('dialog').close()">Cancelar</button>
+                        <button
+                            class="rounded-sm py-1 px-3 bg-[#751711] hover:bg-[#5c120e] text-sm text-white font-semibold transition-colors duration-200 cursor-pointer"
+                            onclick="document.getElementById('change-password-form').submit()" type="submit"
+                            form="change-password-form">
+                            Confirmar Cambios
+                        </button>
+                    </footer>
+                    <form method="dialog">
+                        <button aria-label="Close dialog">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+                                viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                                stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-x-icon lucide-x">
+                                <path d="M18 6 6 18" />
+                                <path d="m6 6 12 12" />
+                            </svg>
+                        </button>
+                    </form>
+                </article>
+            </dialog>
+
+            <dialog id="delete-account" class="dialog w-full sm:max-w-[425px] max-h-[612px]" onclick="this.close()">
+                <article onclick="event.stopPropagation()">
+                    <header>
+                        <h2>Eliminar Cuenta</h2>
+                        <p>¿Estás seguro de querer eliminar tu cuenta? Esta acción es irreversible.</p>
+                    </header>
+                    <section>
+                        <form method="POST" id="delete-account-form" class="form"
+                            action="{{ route('delete.account', Auth::user()->id_usuario) }}">
+                            @csrf
+                            @method('DELETE')
+                        </form>
+                    </section>
+                    <footer>
+                        <button class="btn-outline" onclick="this.closest('dialog').close()">Cancelar</button>
+                        <button
+                            class="rounded-sm py-1 px-3 bg-[#751711] hover:bg-[#5c120e] text-sm text-white font-semibold transition-colors duration-200 cursor-pointer"
+                            onclick="document.getElementById('delete-account-form').submit()" type="submit">
+                            Eliminar Cuenta
+                        </button>
+                    </footer>
+                    <form method="dialog">
+                        <button aria-label="Close dialog">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+                                viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                                stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-x-icon lucide-x">
+                                <path d="M18 6 6 18" />
+                                <path d="m6 6 12 12" />
+                            </svg>
+                        </button>
+                    </form>
+                </article>
+            </dialog>
+        </div>
+
         @if ($errors->any())
             <div class="mb-6 p-4 bg-red-50 border border-red-200 rounded-md">
                 <h2 class="text-base font-semibold text-red-700 mb-2">Error</h2>

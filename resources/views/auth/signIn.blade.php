@@ -1,4 +1,5 @@
 <x-login-layout>
+    
     <div class="container mx-auto pt-5 w-50">
         <h1 class="text-2xl font-bold text-center mb-2">Crear Nueva Cuenta</h1>
         <p class="text-center text-gray-500 mb-6">Campos obligatorios <span class="text-red-600">*</span></p>

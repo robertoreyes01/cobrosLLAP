@@ -24,7 +24,7 @@
             <div class="mb-3">
                 <label for="password" class="form-label">Contraseña</label>
                 <div class="relative">
-                    <input class="input px-6 pl-10" type="password" id="password" name="contrasena" placeholder="********">
+                    <input class="input px-6 pl-10" type="password" id="password" name="password" placeholder="********">
                     <span class="absolute inset-y-0 left-0 flex items-center pl-3">
                         <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24"
                             fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"

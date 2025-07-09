@@ -40,14 +40,12 @@
                                 aria-labelledby="demo-dropdown-menu-trigger">
                                 <div role="group" aria-labelledby="account-options">
                                     <form action="{{ route('main') }}" method="GET">
-                                        @csrf
                                         <button class="btn-ghost" type="submit" role="menuitem"
                                             class="text-muted-foreground-white ml-auto text-xs tracking-widest">
                                             Menú Principal
                                         </button>
                                     </form>
-                                    <form action="{{ route('perfil.show') }}" method="GET">
-                                        @csrf
+                                    <form action="{{ route('profile.show') }}" method="GET">
                                         <button class="btn-ghost" type="submit" role="menuitem"
                                             class="text-muted-foreground-white ml-auto text-xs tracking-widest">
                                             Perfil
@@ -85,9 +83,9 @@
                                 <hr role="separator" />
                                 <form action="{{ route('logout') }}" method="POST">
                                     @csrf
-                                    <button type="submit" role="menuitem"
-                                        class="text-muted-foreground-white ml-auto text-xs tracking-widest">
-                                        Cerrar Sesión
+                                    <button class="btn-ghost" type="submit" role="menuitem"
+                                            class="text-muted-foreground-white ml-auto text-xs tracking-widest">
+                                            Cerrar sesión
                                     </button>
                                 </form>
                             </div>

@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Auth;
 use App\Models\usuario;
+use App\Models\padre;
 use Devrabiul\ToastMagic\Facades\ToastMagic;
 use Illuminate\Validation\ValidationException;
 
@@ -21,20 +22,23 @@ class LoginController extends Controller
     {
         $request->validate([
             'correo' => 'required|email|exists:usuario,correo',
-            'contrasena' => 'required|',
+            'password' => 'required',
         ]);
 
-        $credenciales = $request->only('correo', 'contrasena');
+        $credenciales = $request->only('correo', 'password');
 
         $usuario = usuario::where('correo', $credenciales['correo'])->first();
 
-        if ($usuario && Hash::check($credenciales['contrasena'], $usuario->password)) {
+        if ($usuario && Hash::check($credenciales['password'], $usuario->password)) {
             Auth::login($usuario);
             
             // Verificar si el login fue exitoso
-            if (Auth::check()) {
+            if (Auth::check() && $usuario->estado == '1') {
                 $request->session()->regenerate();
                 return redirect()->route('main');
+            } else {
+                Auth::logout();
+                return redirect()->route('loginForm')->with('error', 'Tu cuenta ha sido desactivada');
             }
         }
 
@@ -82,9 +86,14 @@ class LoginController extends Controller
         $usuario->primer_apellido = $request->primer_apellido;
         $usuario->segundo_apellido = $request->segundo_apellido;
         $usuario->correo = $request->correo;
-        $usuario->password = Hash::make($request->contrasena);
+        $usuario->password = Hash::make($request->password);
+        $usuario->estado = '1';
         $usuario->id_rol = '3';
         $usuario->save();
+
+        $padre = new padre();
+        $padre->id_usuario = $usuario->id_usuario;
+        $padre->save();
 
         ToastMagic::info('Por favor revisa tu correo');
         return redirect()->route('loginForm');
