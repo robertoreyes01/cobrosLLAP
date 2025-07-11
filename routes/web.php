@@ -3,9 +3,9 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\PaymentController;
-use App\Models\usuario;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\MainController;
+use App\Http\Controllers\ChargesController;
 
 Route::get('/', function () {
     return view('auth.login');
@@ -23,7 +23,15 @@ Route::middleware(['auth:usuario'])->group(function(){
     Route::put('perfil/{usuario}', [ProfileController::class, 'update'])->name('profile.update');
     Route::put('perfil/{usuario}/cambiar-correo', [ProfileController::class, 'changeEmail'])->name('change.email');
     Route::put('perfil/{usuario}/cambiar-contraseña', [ProfileController::class, 'changePassword'])->name('change.password');
-    Route::delete('perfil/{usuario}', [ProfileController::class, 'delete'])->name('delete.account');
+});
+
+Route::middleware(['auth:usuario', 'check.user.type:3'])->group(function(){
+    Route::get('lista-estudiantes', [PaymentController::class, 'studentList'])->name('payments.student');
+    Route::get('registro-pagos/{alumno}', [PaymentController::class, 'paymentRegister'])->name('payment.register');
+});
+
+Route::middleware(['auth:usuario', 'check.user.type:2'])->group(function(){
+    Route::get('lista-padres', [ChargesController::class, 'parentsList'])->name('charges.parents');
 });
 
 Route::middleware(['auth:usuario', 'check.user.type:1'])->group(function(){

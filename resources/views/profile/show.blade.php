@@ -1,5 +1,13 @@
+{{--
+    resources/views/profile/show.blade.php
+    Vista de perfil de usuario.
+    Permite visualizar y editar información personal, correo y contraseña del usuario autenticado.
+    Incluye formularios modales para edición de perfil, cambio de correo y cambio de contraseña.
+--}}
+
 <x-app-layout>
     <div class="place-items-center">
+        {{-- Tarjeta de información de perfil --}}
         <div class="card w-100 mt-10">
             <header>
                 <h2 class="text-2xl font-bold">Información de perfil</h2>
@@ -30,6 +38,7 @@
                     type="button" onclick="document.getElementById('edit-profile').showModal()">Editar Perfil</button>
             </footer>
 
+            {{-- Modal para editar perfil --}}
             <dialog id="edit-profile" class="dialog w-full sm:max-w-[425px] max-h-[612px]" onclick="this.close()">
                 <article onclick="event.stopPropagation()">
                     <header>
@@ -87,6 +96,7 @@
             </dialog>
         </div>
 
+        {{-- Tarjeta de información de cuenta --}}
         <div class="card w-100 mt-10">
             <header>
                 <h2 class="text-2xl font-bold">Cuenta</h2>
@@ -97,29 +107,24 @@
                     <div class="col-span-2 text-sm content-around">{{ Auth::user()->correo }}</div>
                 </div>
             </section>
-            <footer class="grid grid-cols-1 grid-rows-3">
-                <div class="mb-0">
+            <footer class="grid grid-cols-1 grid-rows-2 gap-4">
+                <div>
                     <button
                         class="w-43 rounded-sm py-1 px-3 bg-[#751711] hover:bg-[#5c120e] text-white font-semibold transition-colors duration-200 cursor-pointer"
                         type="button" onclick="document.getElementById('change-email').showModal()">
                         Cambiar Correo
                     </button>
                 </div>
-                <div class="mb-6">
+                <div>
                     <button
                         class="w-43 rounded-sm py-1 px-3 bg-[#751711] hover:bg-[#5c120e] text-white font-semibold transition-colors duration-200 cursor-pointer"
                         type="button" onclick="document.getElementById('change-password').showModal()">
                         Cambiar Contraseña
                     </button>
                 </div>
-                <div class="mt-6">
-                    <button class="w-43 rounded-sm py-1 px-3 bg-red-600 hover:bg-red-800 text-white font-semibold transition-colors duration-200 cursor-pointer"
-                    type="button" onclick="document.getElementById('delete-account').showModal()">
-                        Eliminar Cuenta
-                    </button>
-                </div>
             </footer>
 
+            {{-- Modal para cambiar correo --}}
             <dialog id="change-email" class="dialog w-full sm:max-w-[425px] max-h-[612px]" onclick="this.close()">
                 <article onclick="event.stopPropagation()">
                     <header>
@@ -159,6 +164,7 @@
                 </article>
             </dialog>
 
+            {{-- Modal para cambiar contraseña --}}
             <dialog id="change-password" class="dialog w-full sm:max-w-[425px] max-h-[612px]" onclick="this.close()">
                 <article onclick="event.stopPropagation()">
                     <header>
@@ -201,42 +207,9 @@
                     </form>
                 </article>
             </dialog>
-
-            <dialog id="delete-account" class="dialog w-full sm:max-w-[425px] max-h-[612px]" onclick="this.close()">
-                <article onclick="event.stopPropagation()">
-                    <header>
-                        <h2>Eliminar Cuenta</h2>
-                        <p>¿Estás seguro de querer eliminar tu cuenta? Esta acción es irreversible.</p>
-                    </header>
-                    <section>
-                        <form method="POST" id="delete-account-form" class="form"
-                            action="{{ route('delete.account', Auth::user()->id_usuario) }}">
-                            @csrf
-                            @method('DELETE')
-                        </form>
-                    </section>
-                    <footer>
-                        <button class="btn-outline" onclick="this.closest('dialog').close()">Cancelar</button>
-                        <button
-                            class="rounded-sm py-1 px-3 bg-[#751711] hover:bg-[#5c120e] text-sm text-white font-semibold transition-colors duration-200 cursor-pointer"
-                            onclick="document.getElementById('delete-account-form').submit()" type="submit">
-                            Eliminar Cuenta
-                        </button>
-                    </footer>
-                    <form method="dialog">
-                        <button aria-label="Close dialog">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
-                                viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
-                                stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-x-icon lucide-x">
-                                <path d="M18 6 6 18" />
-                                <path d="m6 6 12 12" />
-                            </svg>
-                        </button>
-                    </form>
-                </article>
-            </dialog>
         </div>
 
+        {{-- Muestra errores de validación si existen --}}
         @if ($errors->any())
             <div class="mb-6 p-4 bg-red-50 border border-red-200 rounded-md">
                 <h2 class="text-base font-semibold text-red-700 mb-2">Error</h2>

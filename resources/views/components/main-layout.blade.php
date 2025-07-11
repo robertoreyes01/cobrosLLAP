@@ -41,21 +41,23 @@
                                 <div role="group" aria-labelledby="account-options">
                                     <form action="{{ route('main') }}" method="GET">
                                         <button class="btn-ghost" type="submit" role="menuitem"
-                                            class="text-muted-foreground-white ml-auto text-xs tracking-widest">
+                                            class="text-muted-foreground-white ml-auto text-xs tracking-widest cursor-pointer">
                                             Menú Principal
                                         </button>
                                     </form>
                                     <form action="{{ route('profile.show') }}" method="GET">
                                         <button class="btn-ghost" type="submit" role="menuitem"
-                                            class="text-muted-foreground-white ml-auto text-xs tracking-widest">
+                                            class="text-muted-foreground-white ml-auto text-xs tracking-widest cursor-pointer">
                                             Perfil
                                         </button>
                                     </form>
                                     @if (Auth::user()->id_rol == 3)
-                                        <div role="menuitem">
-                                            Ver Pagos
-                                            <span class="text-muted-foreground text-xs tracking-widest"></span>
-                                        </div>
+                                        <form action="{{ route('payments.student') }}" method="GET">
+                                            <button class="btn-ghost" type="submit" role="menuitem"
+                                                class="text-muted-foreground-white ml-auto text-xs tracking-widest cursor-pointer">
+                                                Ver Pagos
+                                            </button>
+                                        </form>
                                     @elseif (Auth::user()->id_rol == 2)
                                         <div role="menuitem">
                                             Gestionar Cobros
@@ -84,8 +86,8 @@
                                 <form action="{{ route('logout') }}" method="POST">
                                     @csrf
                                     <button class="btn-ghost" type="submit" role="menuitem"
-                                            class="text-muted-foreground-white ml-auto text-xs tracking-widest">
-                                            Cerrar sesión
+                                        class="text-muted-foreground-white ml-auto text-xs tracking-widest cursor-pointer">
+                                        Cerrar sesión
                                     </button>
                                 </form>
                             </div>

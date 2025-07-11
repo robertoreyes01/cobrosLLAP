@@ -6,20 +6,38 @@ use Illuminate\Http\Request;
 use App\Models\usuario;
 use Devrabiul\ToastMagic\Facades\ToastMagic;
 use Illuminate\Support\Facades\Hash;
-use App\Models\padre;
 
+/**
+ * Controlador para la gestión del perfil de usuario.
+ * Permite mostrar, actualizar datos, cambiar correo y contraseña del usuario autenticado.
+ */
 class ProfileController extends Controller
 {
+    /**
+     * Aplica el middleware de autenticación para el guard 'usuario'.
+     */
     public function __construct()
     {
         $this->middleware('auth:usuario');
     }
 
+    /**
+     * Muestra la vista del perfil del usuario.
+     *
+     * @return \Illuminate\View\View
+     */
     public function show()
     {
         return view('profile.show');
     }
 
+    /**
+     * Actualiza los datos básicos del usuario.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  \App\Models\usuario  $usuario
+     * @return \Illuminate\Http\RedirectResponse
+     */
     public function update(Request $request, usuario $usuario){
         $request->validate([
             'primer_nombre' => 'required|string',
@@ -34,6 +52,13 @@ class ProfileController extends Controller
         return redirect()->route('profile.show');
     }
 
+    /**
+     * Cambia el correo electrónico del usuario.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  \App\Models\usuario  $usuario
+     * @return \Illuminate\Http\RedirectResponse
+     */
     public function changeEmail(Request $request, usuario $usuario){
         $request->validate([
             'nuevo_correo' => 'required|email|unique:usuario,correo',
@@ -47,9 +72,17 @@ class ProfileController extends Controller
         return redirect()->route('profile.show');
     }
 
+    /**
+     * Cambia la contraseña del usuario.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  \App\Models\usuario  $usuario
+     * @return \Illuminate\Http\RedirectResponse
+     */
     public function changePassword(Request $request, usuario $usuario){
         $request->validate([
             'nueva_contraseña' => [
+                'unique:usuario,password',
                 'required',
                 'min:8',
                 'confirmed',
@@ -65,16 +98,5 @@ class ProfileController extends Controller
 
         ToastMagic::success('Contraseña actualizada correctamente');
         return redirect()->route('profile.show');
-    }
-
-    public function delete(Request $request, usuario $usuario){
-
-        $padre = padre::where('id_usuario', $usuario->id_usuario)->first();
-        if($padre){
-            $padre->delete();
-        }
-        
-        $usuario->delete();
-        return redirect()->route('loginForm');
     }
 }

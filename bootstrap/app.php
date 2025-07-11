@@ -13,6 +13,8 @@ return Application::configure(basePath: dirname(__DIR__))
         health: '/up',
     )
     ->withMiddleware(function (Middleware $middleware): void {
+        // Registra el middleware 'check.user.type', que asocia el alias con la clase CheckUserType.
+        // Este middleware puede usarse en rutas o controladores para verificar el tipo de usuario autenticado.
         $middleware->alias([
             'check.user.type' => CheckUserType::class,
         ]);

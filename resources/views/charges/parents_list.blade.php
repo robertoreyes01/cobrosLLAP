@@ -1,15 +1,7 @@
-{{--
-    resources/views/payments/student_list.blade.php
-    Vista que muestra la lista de alumnos disponibles por padres/tutores autenticados.
-    Incluye una tabla con los datos de los alumnos y un botón de acción para ver pagos.
---}}
-
 <x-app-layout>
     <div class="relative place-items-center">
-        {{-- Título de la página --}}
-        <h2 class="text-2xl font-bold my-8">Lista de Alumno/s</h2>
+        <h2 class="text-2xl font-bold my-8">Lista de Padres/Tutores</h2>
         <div class="w-120">
-            {{-- Tabla de alumnos --}}
             <table class="table">
                 <thead>
                     <tr>
@@ -20,15 +12,14 @@
                     </tr>
                 </thead>
                 <tbody>
-                    @if ($alumnos->count() > 0)
-                    @foreach ($alumnos as $alumno)
+                    @if ($parents->count() > 0)
+                    @foreach ($parents as $parent)
                         <tr>
                             <td>{{ $loop->iteration }}</td>
-                            <td>{{ $alumno->nombres }}</td>
-                            <td>{{ $alumno->apellidos }}</td>
+                            <td>{{ $parent->primer_nombre }} {{ $parent->segundo_nombre }}</td>
+                            <td>{{ $parent->primer_apellido }} {{ $parent->segundo_apellido }}</td>
                             <td class="flex justify-center">
-                                {{-- Botón para ver pagos del alumno --}}
-                                <form action="{{ route('payment.register', $alumno) }}" method="GET">
+                                <form action="{{ route('payment.register', $parent) }}" method="GET">
                                     <button class="rounded-sm p-1.5 bg-[#751711] hover:bg-[#5c120e] text-white font-semibold transition-colors duration-200 cursor-pointer shadow-md"
                                     type="submit">
                                         <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20"
@@ -48,13 +39,15 @@
                         @endforeach
                     @else
                         <tr>
-                            <td colspan="4" class="text-center text-muted-foreground text-lg">No hay alumnos registrados</td>
+                            <td colspan="4" class="text-center text-muted-foreground text-lg">No hay padres/tutores registrados</td>
                         </tr>
                     @endif
                 </tbody>
             </table>
+            <div class="mt-3">
+                {{ $parents->links() }}
+            </div>
         </div>
-        {{-- Leyenda de icono de acción --}}
         <div class="absolute top-18.5 right-95 grid grid-cols-2 grid-rows-1 gap-2">
             <div class="justify-items-end">
                 <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none"
