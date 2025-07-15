@@ -25,12 +25,10 @@ class PaymentController extends Controller
      *
      * @return \Illuminate\View\View
      */
-    public function studentList()
+    public function studentList($padre)
     {
-        $userId = Auth::user()->id_usuario;
-
         $alumnos = alumno::join('padre', 'alumno.id_alumno', '=', 'padre.id_alumno')
-            ->where('padre.id_usuario', $userId)
+            ->where('padre.id_usuario', $padre)
             ->select('alumno.*')
             ->get();
 

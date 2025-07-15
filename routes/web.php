@@ -23,17 +23,18 @@ Route::middleware(['auth:usuario'])->group(function(){
     Route::put('perfil/{usuario}', [ProfileController::class, 'update'])->name('profile.update');
     Route::put('perfil/{usuario}/cambiar-correo', [ProfileController::class, 'changeEmail'])->name('change.email');
     Route::put('perfil/{usuario}/cambiar-contraseña', [ProfileController::class, 'changePassword'])->name('change.password');
-});
 
-Route::middleware(['auth:usuario', 'check.user.type:3'])->group(function(){
-    Route::get('lista-estudiantes', [PaymentController::class, 'studentList'])->name('payments.student');
-    Route::get('registro-pagos/{alumno}', [PaymentController::class, 'paymentRegister'])->name('payment.register');
-});
+    Route::middleware(['check.user.type:3,2,1'])->group(function(){
+        Route::get('lista-estudiantes/{padre}', [PaymentController::class, 'studentList'])->name('payments.student');
+        Route::get('registro-pagos/{alumno}', [PaymentController::class, 'paymentRegister'])->name('payment.register');
+    });
 
-Route::middleware(['auth:usuario', 'check.user.type:2'])->group(function(){
-    Route::get('lista-padres', [ChargesController::class, 'parentsList'])->name('charges.parents');
-});
+    Route::middleware(['check.user.type:2,1'])->group(function(){
+        Route::get('lista-padres', [ChargesController::class, 'parentsList'])->name('charges.parents');
+        Route::get('buscar-padres', [ChargesController::class, 'searchParents'])->name('search.parents');
+    });
 
-Route::middleware(['auth:usuario', 'check.user.type:1'])->group(function(){
+    Route::middleware(['auth:usuario', 'check.user.type:1'])->group(function(){
 
+    });
 });

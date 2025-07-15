@@ -2,6 +2,7 @@
 <html lang="es">
 
 <head>
+    <link rel="icon" href="{{ asset('img/logollap.png') }}" type="image/x-icon">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     @vite('resources/css/app.css')
@@ -40,30 +41,28 @@
                             <div role="menu" id="demo-dropdown-menu-menu"
                                 aria-labelledby="demo-dropdown-menu-trigger">
                                 <div role="group" aria-labelledby="account-options">
-                                    <form action="{{ route('main') }}" method="GET">
-                                        <button class="btn-ghost" type="submit" role="menuitem"
-                                            class="text-muted-foreground-white ml-auto text-xs tracking-widest cursor-pointer">
-                                            Menú Principal
-                                        </button>
-                                    </form>
-                                    <form action="{{ route('profile.show') }}" method="GET">
-                                        <button class="btn-ghost" type="submit" role="menuitem"
-                                            class="text-muted-foreground-white ml-auto text-xs tracking-widest cursor-pointer">
-                                            Perfil
-                                        </button>
-                                    </form>
+                                    <button class="btn-ghost" type="submit" role="menuitem"
+                                        onclick="window.location.href='{{ route('main') }}'"
+                                        class="text-muted-foreground-white ml-auto text-xs tracking-widest cursor-pointer">
+                                        Menú Principal
+                                    </button>
+                                    <button class="btn-ghost" type="submit" role="menuitem"
+                                        onclick="window.location.href='{{ route('profile.show') }}'"
+                                        class="text-muted-foreground-white ml-auto text-xs tracking-widest cursor-pointer">
+                                        Perfil
+                                    </button>
                                     @if (Auth::user()->id_rol == 3)
-                                        <form action="{{ route('payments.student') }}" method="GET">
-                                            <button class="btn-ghost" type="submit" role="menuitem"
-                                                class="text-muted-foreground-white ml-auto text-xs tracking-widest cursor-pointer">
-                                                Ver Pagos
-                                            </button>
-                                        </form>
+                                        <button class="btn-ghost" type="submit" role="menuitem"
+                                            onclick="window.location.href='{{ route('payments.student', $padre = Auth::user()->id_usuario) }}'"
+                                            class="text-muted-foreground-white ml-auto text-xs tracking-widest cursor-pointer">
+                                            Ver Pagos
+                                        </button>
                                     @elseif (Auth::user()->id_rol == 2)
-                                        <div role="menuitem">
+                                        <button class="btn-ghost" type="submit" role="menuitem"
+                                            onclick="window.location.href='{{ route('charges.parents') }}'"
+                                            class="text-muted-foreground-white ml-auto text-xs tracking-widest cursor-pointer">
                                             Gestionar Cobros
-                                            <span class="text-muted-foreground text-xs tracking-widest"></span>
-                                        </div>
+                                        </button>
                                     @elseif (Auth::user()->id_rol == 1)
                                         <div role="menuitem">
                                             Gestionar Cobros
@@ -94,18 +93,24 @@
                             </div>
                         </div>
                     </div>
-                    @if (Auth::user()->id_rol == 3)
-                        <h3 class="text-white text-2xl font-semibold pl-5">Gestión de Pagos</h3>
-                    @elseif (Auth::user()->id_rol == 2)
-                        <h3 class="text-white text-2xl font-semibold pl-5">Gestión de Cobros</h3>
-                    @elseif (Auth::user()->id_rol == 1)
-                        <h3 class="text-white text-2xl font-semibold pl-5">Administración</h3>
+                    @if (Route::is('main'))
+                        <h3 class="text-white text-2xl font-semibold pl-5">Menú Principal</h3>
+                    @elseif (Route::is('profile.show'))
+                        <h3 class="text-white text-2xl font-semibold pl-5">Perfil</h3>
+                    @else
+                        @if (Auth::user()->id_rol == 3)
+                            <h3 class="text-white text-2xl font-semibold pl-5">Gestión de Pagos</h3>
+                        @elseif (Auth::user()->id_rol == 2)
+                            <h3 class="text-white text-2xl font-semibold pl-5">Gestión de Cobros</h3>
+                        @elseif (Auth::user()->id_rol == 1)
+                            <h3 class="text-white text-2xl font-semibold pl-5">Administración</h3>
+                        @endif
                     @endif
                 </div>
                 <div class="col-start-3">
                     <img src="{{ asset('img/logollap.png') }}" alt="logo" class="block mx-auto w-15 h-15">
                 </div>
-                <div class="col-start-5 text-white italic text-center flex flex-col">
+                <div class="col-start-5 text-white italic text-center flex flex-col pt-1">
                     <p>Educando a los Jóvenes con</p>
                     <p>Amor y Disciplina</p>
                 </div>

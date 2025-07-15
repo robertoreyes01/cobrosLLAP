@@ -22,13 +22,16 @@ class CheckUserType
      * @param  mixed  $type  El tipo de rol requerido para acceder.
      * @return \Symfony\Component\HttpFoundation\Response
      */
-    public function handle(Request $request, Closure $next, $type): Response
+    public function handle(Request $request, Closure $next, ...$type): Response
     {
+        $allowedTypes = array_map('intval', $type);
+
         // Verifica si el usuario autenticado con el guard 'usuario' tiene el rol requerido
-        if(Auth::guard('usuario')->check() && Auth::guard('usuario')->user()->id_rol != $type) {
-            // Si el usuario tiene el rol, lo redirige a la página principal de pagos
+        if(Auth::guard('usuario')->check() && !in_array(Auth::guard('usuario')->user()->id_rol, $allowedTypes, true)) {
+            // Si el usuario no tiene el rol, lo redirige a la página principal de pagos
             return redirect()->route('main');
         }
+
         // Si no, continúa con la solicitud
         return $next($request);
     }
