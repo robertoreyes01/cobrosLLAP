@@ -1,10 +1,12 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Charges;
 
+use App\Http\Controllers\Controller;
 use App\Models\usuario;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
+use App\Models\alumno;
 
 class ChargesController extends Controller
 {
@@ -25,7 +27,7 @@ class ChargesController extends Controller
     public function searchParents(request $request)
     {
         $request->validate([
-            'busqueda' => 'required|string|alpha'
+            'busqueda' => 'string|alpha'
         ]);
 
         $search = Str::ucfirst($request->busqueda);
@@ -41,4 +43,32 @@ class ChargesController extends Controller
 
         return view('charges.parents_list', compact('parents'));
     }
+
+    public function studentsList()
+    {
+        $alumnos = alumno::select('nombres', 'apellidos', 'id_alumno')
+            ->orderBy('nombres', 'asc')
+            ->paginate(9);
+
+        return view('charges.students_list', compact('alumnos'));
+    }
+
+    public function searchStudent(Request $request)
+    {
+        $request->validate([
+            'busqueda' => 'string|alpha'
+        ]);
+
+        $search = Str::ucfirst($request->busqueda);
+
+        $alumnos = alumno::where('nombres', 'like', '%' . $search . '%')
+            ->orWhere('apellidos', 'like', '%' . $search . '%')
+            ->select('alumno.*')
+            ->orderBy('nombres', 'asc')
+            ->paginate(9);
+
+        return view('charges.students_list', compact('alumnos'));
+    }
+
+
 }

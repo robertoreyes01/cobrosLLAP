@@ -2,10 +2,11 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Auth\LoginController;
-use App\Http\Controllers\PaymentController;
-use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\Payments\PaymentController;
+use App\Http\Controllers\Profile\ProfileController;
 use App\Http\Controllers\MainController;
-use App\Http\Controllers\ChargesController;
+use App\Http\Controllers\Charges\ChargesController;
+use App\Http\Controllers\Admin\StudentController;
 
 Route::get('/', function () {
     return view('auth.login');
@@ -25,13 +26,19 @@ Route::middleware(['auth:usuario'])->group(function(){
     Route::put('perfil/{usuario}/cambiar-contraseña', [ProfileController::class, 'changePassword'])->name('change.password');
 
     Route::middleware(['check.user.type:3,2,1'])->group(function(){
-        Route::get('lista-estudiantes/{padre}', [PaymentController::class, 'studentList'])->name('payments.student');
+        Route::get('lista-alumnos/{padre}', [PaymentController::class, 'studentList'])->name('payments.student');
         Route::get('registro-pagos/{alumno}', [PaymentController::class, 'paymentRegister'])->name('payment.register');
     });
 
     Route::middleware(['check.user.type:2,1'])->group(function(){
         Route::get('lista-padres', [ChargesController::class, 'parentsList'])->name('charges.parents');
         Route::get('buscar-padres', [ChargesController::class, 'searchParents'])->name('search.parents');
+        Route::get('lista-estudiantes', [ChargesController::class, 'studentsList'])->name('charges.students');
+        Route::get('buscar-estudiantes', [ChargesController::class, 'searchStudent'])->name('search.students');
+        Route::resource('estudiantes', StudentController::class)
+            ->except(['create', 'edit', 'show'])
+            ->names('students');
+        Route::get('buscar-estudiante', [StudentController::class, 'searchStudent'])->name('search.student');
     });
 
     Route::middleware(['auth:usuario', 'check.user.type:1'])->group(function(){

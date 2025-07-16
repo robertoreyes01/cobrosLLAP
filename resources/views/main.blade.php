@@ -22,7 +22,8 @@
                     <p class="text-sm text-center">Mira todos tus pagos realizados por alumno/s</p>
                 </header>
                 <section class="flex justify-center">
-                    <button onclick="window.location.href='{{ route('payments.student', $padre = Auth::user()->id_usuario) }}'"
+                    <button
+                        onclick="window.location.href='{{ route('payments.student', $padre = Auth::user()->id_usuario) }}'"
                         class="rounded-sm p-1.75 bg-[#751711] hover:bg-[#5c120e] text-white font-semibold transition-colors duration-200 cursor-pointer shadow-md">
                         Acceder
                     </button>
@@ -56,17 +57,22 @@
                 </div>
                 <div class="card w-72 mt-30">
                     <header class="flex flex-col items-center">
-                        <svg xmlns="http://www.w3.org/2000/svg" height="82px" viewBox="0 -960 960 960" width="82px"
-                            fill="#000000">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="82px" height="82px" viewBox="0 0 24 24"
+                            fill="none" stroke="#000000" stroke-width="2" stroke-linecap="round"
+                            stroke-linejoin="round" class="lucide lucide-graduation-cap-icon lucide-graduation-cap">
                             <path
-                                d="M450-201h60v-40h60q12.75 0 21.38-8.63Q600-258.25 600-271v-130q0-12.75-8.62-21.38Q582.75-431 570-431H420v-70h180v-60h-90v-40h-60v40h-60q-12.75 0-21.37 8.62Q360-543.75 360-531v130q0 12.75 8.63 21.37Q377.25-371 390-371h150v70H360v60h90v40ZM220-80q-24 0-42-18t-18-42v-680q0-24 18-42t42-18h361l219 219v521q0 24-18 42t-42 18H220Zm311-581v-159H220v680h520v-521H531ZM220-820v159-159 680-680Z" />
+                                d="M21.42 10.922a1 1 0 0 0-.019-1.838L12.83 5.18a2 2 0 0 0-1.66 0L2.6 9.08a1 1 0 0 0 0 1.832l8.57 3.908a2 2 0 0 0 1.66 0z" />
+                            <path d="M22 10v6" />
+                            <path d="M6 12.5V16a6 3 0 0 0 12 0v-3.5" />
                         </svg>
-                        <h2>Gestionar Alumnos</h2>
-                        <p class="text-sm text-center">Gestiona los alumnos inscritos o agrega nuevos</p>
+                        <h2>Gestionar Estudiantes</h2>
+                        <p class="text-sm text-center">Gestiona los estudiantes inscritos o agrega nuevos</p>
                     </header>
                     <section class="flex justify-center">
-                        <button
-                            class="rounded-sm p-1.75 bg-[#751711] hover:bg-[#5c120e] text-white font-semibold transition-colors duration-200 cursor-pointer shadow-md">Acceder</button>
+                        <button onclick="window.location.href='{{ route('students.index') }}'"
+                            class="rounded-sm p-1.75 bg-[#751711] hover:bg-[#5c120e] text-white font-semibold transition-colors duration-200 cursor-pointer shadow-md">
+                            Acceder
+                        </button>
                     </section>
                 </div>
             </div>

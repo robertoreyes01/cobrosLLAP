@@ -43,5 +43,10 @@ class alumno extends Model
         'id_seccion'
     ];
 
+    public function getRouteKeyName()
+    {
+        return 'id_alumno';
+    }
+
     use HasFactory;
 }

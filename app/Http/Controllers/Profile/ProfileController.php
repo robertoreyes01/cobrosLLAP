@@ -1,7 +1,8 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Profile;
 
+use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\usuario;
 use Devrabiul\ToastMagic\Facades\ToastMagic;
@@ -40,10 +41,10 @@ class ProfileController extends Controller
      */
     public function update(Request $request, usuario $usuario){
         $request->validate([
-            'primer_nombre' => 'required|string',
-            'segundo_nombre' => 'required|string',
-            'primer_apellido' => 'required|string',
-            'segundo_apellido' => 'required|string',
+            'primer_nombre' => 'required|string|alpha',
+            'segundo_nombre' => 'required|string|alpha',
+            'primer_apellido' => 'required|string|alpha',
+            'segundo_apellido' => 'required|string|alpha',
         ]);
 
         $usuario->update($request->all());

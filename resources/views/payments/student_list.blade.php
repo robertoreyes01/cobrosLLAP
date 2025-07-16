@@ -6,9 +6,11 @@
 
 <x-app-layout>
     <div class="place-items-center">
+
         {{-- Título de la página --}}
         <h2 class="text-2xl font-bold my-8">Lista de Alumno/s</h2>
         <div class="w-130">
+            
             {{-- Tabla de alumnos --}}
             <table class="table">
                 <thead>
@@ -48,7 +50,7 @@
                         @endforeach
                     @else
                         <tr>
-                            <td colspan="4" class="text-center text-muted-foreground text-lg">No hay alumnos registrados</td>
+                            <td colspan="4" class="text-center text-muted-foreground text-lg">No hay alumnos registrados a su cargo</td>
                         </tr>
                     @endif
                 </tbody>

@@ -1,18 +1,16 @@
 {{--
-    Vista: Lista de Padres/Tutores
-    Ubicación: resources/views/charges/parents_list.blade.php
+    Vista: Lista de Estudiantes
+    Ubicación: resources/views/charges/students_list.blade.php
     Descripción:
-        Muestra una lista paginada de padres o tutores registrados en el sistema, permitiendo buscar por nombre y navegar a la lista de estudiantes asociados a cada padre/tutor.
+        Muestra una lista paginada de estudiantes registrados en el sistema, permitiendo buscar por nombre y navegar al registro de pagos de cada estudiante.
         Incluye controles para búsqueda, navegación y visualización de errores.
     Variables esperadas:
-        - $parents: Illuminate\Pagination\LengthAwarePaginator | Colección paginada de padres/tutores, cada uno con los atributos:
-            - primer_nombre
-            - segundo_nombre
-            - primer_apellido
-            - segundo_apellido
+        - $alumnos: Illuminate\Pagination\LengthAwarePaginator | Colección paginada de estudiantes, cada uno con los atributos:
+            - nombres
+            - apellidos
     Funcionalidad:
-        - Permite buscar padres/tutores por nombre.
-        - Permite navegar a la lista de estudiantes asociados a un padre/tutor.
+        - Permite buscar estudiantes por nombre.
+        - Permite navegar al registro de pagos de un estudiante.
         - Muestra mensajes de error si existen.
         - Incluye paginación.
 --}}
@@ -21,16 +19,16 @@
         <div class="absolute top-0 right-0.5">
             <button
                 class="rounded-sm p-1.5 bg-[#751711] hover:bg-[#5c120e] text-white font-semibold transition-colors duration-200 cursor-pointer shadow-md"
-                onclick="window.location.href='{{ route('charges.students') }}'">
-                Ver estudiantes
+                onclick="window.location.href='{{ route('charges.parents') }}'">
+                Ver padres/tutores
             </button>
         </div>
     </div>
 
     <div class="place-items-center">
-        <h2 class="text-2xl font-bold my-6">Lista de Padres/Tutores</h2>
+        <h1 class="text-2xl font-bold my-6">Lista de estudiantes</h1>
         <div class="relative mb-5 pl-3.5">
-            <form action="{{ route('search.parents') }}" method="GET" class="form">
+            <form action="{{ route('search.students')}}" method="GET" class="form">
                 <div class="grid grid-cols-3 grid-rows-1 gap-1">
                     <div class="col-span-2">
                         <input type="text" id="search" name="busqueda" placeholder="Buscar" maxlength="22">
@@ -49,7 +47,7 @@
                 </div>
             </form>
             <div class="absolute top-0 right-3.5">
-                <button onclick="window.location.href='{{ route('charges.parents') }}'" data-tooltip="Volver"
+                <button onclick="window.location.href='{{ route('charges.students') }}'" data-tooltip="Volver"
                     class="rounded-sm p-1.5 bg-[#751711] hover:bg-[#5c120e] text-white font-semibold transition-colors duration-200 cursor-pointer shadow-md">
                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
                         fill="none" stroke="#ffffff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
@@ -83,34 +81,35 @@
                     </tr>
                 </thead>
                 <tbody>
-                    @if ($parents->count() > 0)
-                        @foreach ($parents as $parent)
-                            <tr>
-                                <td>{{ $loop->iteration }}</td>
-                                <td>{{ $parent->primer_nombre }} {{ $parent->segundo_nombre }}</td>
-                                <td>{{ $parent->primer_apellido }} {{ $parent->segundo_apellido }}</td>
-                                <td class="flex justify-center">
-                                    <form action="{{ route('payments.student', $parent) }}" method="GET">
-                                        <button type="submit" data-tooltip="Ver alumnos"
-                                            class="rounded-sm p-1.5 bg-[#751711] hover:bg-[#5c120e] text-white font-semibold transition-colors duration-200 cursor-pointer shadow-md">
-                                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20"
-                                                viewBox="0 0 24 24" fill="none" stroke="#ffffff" stroke-width="2"
-                                                stroke-linecap="round" stroke-linejoin="round"
-                                                class="lucide lucide-user-round-search-icon lucide-user-round-search">
-                                                <circle cx="10" cy="8" r="5" />
-                                                <path d="M2 21a8 8 0 0 1 10.434-7.62" />
-                                                <circle cx="18" cy="18" r="3" />
-                                                <path d="m22 22-1.9-1.9" />
-                                            </svg>
-                                        </button>
-                                    </form>
-                                </td>
-                            </tr>
+                    @if ($alumnos->count() > 0)
+                    @foreach ($alumnos as $alumno)
+                        <tr>
+                            <td>{{ $loop->iteration }}</td>
+                            <td>{{ $alumno->nombres }}</td>
+                            <td>{{ $alumno->apellidos }}</td>
+                            <td class="flex justify-center">
+                                {{-- Botón para ver pagos del alumno --}}
+                                <form action="{{ route('payment.register', $alumno) }}" method="GET">
+                                    <button class="rounded-sm p-1.5 bg-[#751711] hover:bg-[#5c120e] text-white font-semibold transition-colors duration-200 cursor-pointer shadow-md"
+                                    type="submit" data-tooltip="Ver pagos">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20"
+                                            viewBox="0 0 24 24" fill="none" stroke="#ffffff" stroke-width="1.75"
+                                            stroke-linecap="round" stroke-linejoin="round"
+                                            class="lucide lucide-file-search-icon lucide-file-search">
+                                            <path d="M14 2v4a2 2 0 0 0 2 2h4" />
+                                            <path
+                                                d="M4.268 21a2 2 0 0 0 1.727 1H18a2 2 0 0 0 2-2V7l-5-5H6a2 2 0 0 0-2 2v3" />
+                                            <path d="m9 18-1.5-1.5" />
+                                            <circle cx="5" cy="14" r="3" />
+                                        </svg>
+                                    </button>
+                                </form>
+                            </td>
+                        </tr>
                         @endforeach
                     @else
                         <tr>
-                            <td colspan="4" class="text-center text-muted-foreground text-lg">No hay padres/tutores
-                                registrados</td>
+                            <td colspan="4" class="text-center text-muted-foreground text-lg">No hay estudiantes registrados</td>
                         </tr>
                     @endif
                 </tbody>
@@ -118,7 +117,7 @@
         </div>
 
         <div class="mt-2 pr-4.5">
-            {{ $parents->links() }}
+            {{ $alumnos->links() }}
         </div>
 
     </div>

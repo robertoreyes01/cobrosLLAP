@@ -63,6 +63,11 @@
                                             class="text-muted-foreground-white ml-auto text-xs tracking-widest cursor-pointer">
                                             Gestionar Cobros
                                         </button>
+                                        <button class="btn-ghost" type="submit" role="menuitem"
+                                            onclick="window.location.href='{{ route('students.index') }}'"
+                                            class="text-muted-foreground-white ml-auto text-xs tracking-widest cursor-pointer">
+                                            Gestionar Estudiantes
+                                        </button>
                                     @elseif (Auth::user()->id_rol == 1)
                                         <div role="menuitem">
                                             Gestionar Cobros
