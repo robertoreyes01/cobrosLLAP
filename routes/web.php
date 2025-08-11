@@ -7,6 +7,7 @@ use App\Http\Controllers\Profile\ProfileController;
 use App\Http\Controllers\MainController;
 use App\Http\Controllers\Charges\ChargesController;
 use App\Http\Controllers\Admin\StudentController;
+use App\Http\Controllers\Admin\PriceController;
 
 Route::get('/', function () {
     return view('auth.login');
@@ -39,9 +40,16 @@ Route::middleware(['auth:usuario'])->group(function(){
             ->except(['create', 'edit', 'show'])
             ->names('students');
         Route::get('buscar-estudiante', [StudentController::class, 'searchStudent'])->name('search.student');
+        Route::put('editar-pago/{pago}', [PaymentController::class, 'updatePayment'])->name('payment.update');
+
     });
 
-    Route::middleware(['auth:usuario', 'check.user.type:1'])->group(function(){
+    Route::middleware(['check.user.type:1'])->group(function(){
+        Route::post('guardar-pago', [PaymentController::class, 'storePayment'])->name('payment.store');
+        Route::delete('eliminar-pago/{pago}', [PaymentController::class, 'destroyPayment'])->name('payment.destroy');
+        Route::resource('precios', PriceController::class)
+            ->except(['create', 'edit', 'show'])
+            ->names('prices');
 
     });
 });

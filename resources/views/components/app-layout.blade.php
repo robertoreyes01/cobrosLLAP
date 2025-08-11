@@ -69,22 +69,25 @@
                                             Gestionar Estudiantes
                                         </button>
                                     @elseif (Auth::user()->id_rol == 1)
-                                        <div role="menuitem">
+                                        <button class="btn-ghost" type="submit" role="menuitem"
+                                            onclick="window.location.href='{{ route('charges.parents') }}'"
+                                            class="text-muted-foreground-white ml-auto text-xs tracking-widest cursor-pointer">
                                             Gestionar Cobros
-                                            <span class="text-muted-foreground text-xs tracking-widest"></span>
-                                        </div>
+                                        </button>
                                         <div role="menuitem">
                                             Gestionar Cuentas
                                             <span class="text-muted-foreground text-xs tracking-widest"></span>
                                         </div>
-                                        <div role="menuitem">
-                                            Gestionar Alumnos
-                                            <span class="text-muted-foreground text-xs tracking-widest"></span>
-                                        </div>
-                                        <div role="menuitem">
+                                        <button class="btn-ghost" type="submit" role="menuitem"
+                                            onclick="window.location.href='{{ route('students.index') }}'"
+                                            class="text-muted-foreground-white ml-auto text-xs tracking-widest cursor-pointer">
+                                            Gestionar Estudiantes
+                                        </button>
+                                        <button class="btn-ghost" type="submit" role="menuitem"
+                                            onclick="window.location.href='{{ route('prices.index') }}'"
+                                            class="text-muted-foreground-white ml-auto text-xs tracking-widest cursor-pointer">
                                             Gestionar Precios
-                                            <span class="text-muted-foreground text-xs tracking-widest"></span>
-                                        </div>
+                                        </button>
                                     @endif
                                 </div>
                                 <hr role="separator" />

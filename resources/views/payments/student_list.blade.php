@@ -8,7 +8,7 @@
     <div class="place-items-center">
 
         {{-- Título de la página --}}
-        <h2 class="text-2xl font-bold my-8">Lista de Alumno/s</h2>
+        <h2 class="text-2xl font-bold my-8">Alumno/s Asociado a {{ $padre->primer_nombre }} {{ $padre->primer_apellido }}</h2>
         <div class="w-130">
             
             {{-- Tabla de alumnos --}}

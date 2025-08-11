@@ -81,9 +81,12 @@
                                 <td>{{ $student->apellidos }}</td>
                                 <td>{{ $student->seccion }}</td>
                                 <td class="flex justify-center">
-                                    <button data-tooltip="Editar" data-id="{{ $student->id_alumno }}"
-                                        data-names="{{ $student->nombres }}" data-lastNames="{{ $student->apellidos }}"
-                                        data-section="{{ $student->id_seccion }}" onclick="openEditStudentDialog(this)"
+                                    <button data-tooltip="Editar"
+                                        data-id="{{ $student->id_alumno }}"
+                                        data-names="{{ $student->nombres }}" 
+                                        data-lastNames="{{ $student->apellidos }}"
+                                        data-section="{{ $student->id_seccion }}"
+                                        onclick="openEditStudentDialog(this)"
                                         class="mx-0.5 rounded-sm p-1.5 bg-[#751711] hover:bg-[#5c120e] text-white font-semibold transition-colors duration-200 cursor-pointer shadow-md">
                                         <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20"
                                             viewBox="0 0 24 24" fill="none" stroke="#ffffff" stroke-width="2.25"
@@ -134,8 +137,8 @@
                     <p id="new-student-description">LLena los campos para agregar un nuevo estudiante. Clic en guardar
                         al terminar.</p>
                 </header>
-                <section class="place-items-center">
-                    <form action="{{ route('students.store') }}" method="POST" class="form grid gap-4 w-1/2"
+                <section class="">
+                    <form action="{{ route('students.store') }}" method="POST" class="form grid gap-4 w-3/5"
                         id="new-student-form">
                         @csrf
                         <div class="grid gap-3">
@@ -264,6 +267,16 @@
                         </button>
                     </form>
                 </footer>
+                <form method="dialog">
+                    <button aria-label="Close dialog">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                            fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                            stroke-linejoin="round" class="lucide lucide-x-icon lucide-x">
+                            <path d="M18 6 6 18" />
+                            <path d="m6 6 12 12" />
+                        </svg>
+                    </button>
+                </form>
             </article>
         </dialog>
 
