@@ -65,10 +65,10 @@ class LoginController extends Controller
     public function sigIn(Request $request)
     {
         $request->validate([
-            'primer_nombre' => 'required|string|max:20',
-            'segundo_nombre' => 'required|string|max:20',
-            'primer_apellido' => 'required|string|max:20',
-            'segundo_apellido' => 'required|string|max:20',
+            'primer_nombre' => 'required|string',
+            'segundo_nombre' => 'required|string',
+            'primer_apellido' => 'required|string',
+            'segundo_apellido' => 'required|string',
             'correo' => 'required|email|unique:usuario,correo',
             'contrasena' => [
                 'required',

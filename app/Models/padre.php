@@ -16,6 +16,8 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
  */
 class padre extends Model
 {
+    use HasFactory;
+
     /**
      * Nombre de la tabla asociada al modelo.
      * @var string
@@ -41,5 +43,5 @@ class padre extends Model
         'id_alumno'
     ];
 
-    use HasFactory;
+    
 }

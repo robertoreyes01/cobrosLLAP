@@ -74,10 +74,11 @@
                                             class="text-muted-foreground-white ml-auto text-xs tracking-widest cursor-pointer">
                                             Gestionar Cobros
                                         </button>
-                                        <div role="menuitem">
+                                        <button class="btn-ghost" type="submit" role="menuitem"
+                                            onclick="window.location.href='{{ route('accounts.index') }}'"
+                                            class="text-muted-foreground-white ml-auto text-xs tracking-widest cursor-pointer">
                                             Gestionar Cuentas
-                                            <span class="text-muted-foreground text-xs tracking-widest"></span>
-                                        </div>
+                                        </button>
                                         <button class="btn-ghost" type="submit" role="menuitem"
                                             onclick="window.location.href='{{ route('students.index') }}'"
                                             class="text-muted-foreground-white ml-auto text-xs tracking-widest cursor-pointer">

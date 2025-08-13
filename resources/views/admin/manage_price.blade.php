@@ -16,7 +16,7 @@
     </div>
 
     <div class="place-items-center">
-        <h1 class="text-2xl font-bold my-8">Gestión de Precios</h1>
+        <h1 class="text-2xl font-bold my-8">Gestión de Precios de Grado</h1>
         <div class="w-auto">
             <table class="table">
                 <thead>
@@ -50,7 +50,7 @@
                                             <path d="m15 5 4 4" />
                                         </svg>
                                     </button>
-                                    <button data-tooltip="Eliminar" 
+                                    <button data-tooltip="Eliminar"
                                         data-id_section="{{ $price->id_seccion }}"
                                         data-name="{{ $price->nombre }}"
                                         onclick="openDeleteSectionDialog(this)"

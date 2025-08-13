@@ -11,13 +11,19 @@ use Devrabiul\ToastMagic\Facades\ToastMagic;
 use Illuminate\Http\Request;
 
 /**
- * Controlador para la gestión de pagos.
- * Permite mostrar la lista de alumnos asociados al usuario autenticado y el historial de pagos de un alumno.
+ * Class PaymentController
+ * 
+ * Controlador para la gestión de pagos del sistema educativo.
+ * Permite mostrar la lista de alumnos asociados al usuario autenticado, el historial de pagos de un alumno,
+ * y realizar operaciones CRUD sobre los registros de pagos.
+ * Aplica el middleware de autenticación para el guard 'usuario'.
  */
 class PaymentController extends Controller
 {
     /**
-     * Aplica el middleware de autenticación para el guard 'usuario'.
+     * PaymentController constructor.
+     * 
+     * Aplica el middleware de autenticación para usuarios.
      */
     public function __construct()
     {
@@ -27,6 +33,7 @@ class PaymentController extends Controller
     /**
      * Muestra la lista de alumnos asociados al padre o tutor encargado.
      *
+     * @param int $padre ID del usuario padre/tutor
      * @return \Illuminate\View\View
      */
     public function studentList($padre)
@@ -43,8 +50,9 @@ class PaymentController extends Controller
 
     /**
      * Muestra el historial de pagos de un alumno específico.
+     * Calcula automáticamente el próximo mes a pagar basado en los pagos existentes.
      *
-     * @param  int  $alumno  ID del alumno
+     * @param int $alumno ID del alumno
      * @return \Illuminate\View\View
      */
     public function paymentRegister($alumno)
@@ -112,6 +120,12 @@ class PaymentController extends Controller
         return view('payments.register', compact('pagos', 'alumno', 'alumno_nombre', 'alumno_apellido', 'seccion', 'mes'));
     }
 
+    /**
+     * Almacena un nuevo registro de pago en el sistema.
+     *
+     * @param Request $request
+     * @return \Illuminate\Http\RedirectResponse
+     */
     public function storePayment(Request $request)
     {
         $request->validate([
@@ -133,6 +147,13 @@ class PaymentController extends Controller
         return redirect()->back();
     }
 
+    /**
+     * Actualiza un registro de pago existente.
+     *
+     * @param Request $request
+     * @param registroPagos $pago
+     * @return \Illuminate\Http\RedirectResponse
+     */
     public function updatePayment(Request $request, registroPagos $pago){
         $request->validate([
             'fecha' => 'required|date',
@@ -145,6 +166,12 @@ class PaymentController extends Controller
         return redirect()->back();
     }
 
+    /**
+     * Elimina un registro de pago del sistema.
+     *
+     * @param registroPagos $pago
+     * @return \Illuminate\Http\RedirectResponse
+     */
     public function destroyPayment(registroPagos $pago)
     {
         $pago->delete();

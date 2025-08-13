@@ -8,13 +8,30 @@ use App\Models\alumno;
 use Illuminate\Support\Str;
 use Devrabiul\ToastMagic\Facades\ToastMagic;
 
+/**
+ * Class StudentController
+ * 
+ * Controlador para la gestión de estudiantes del sistema educativo.
+ * Permite crear, leer, actualizar, eliminar y buscar estudiantes, incluyendo su información de sección.
+ * Aplica el middleware de autenticación para el guard 'usuario'.
+ */
 class StudentController extends Controller
 {
+    /**
+     * StudentController constructor.
+     * 
+     * Aplica el middleware de autenticación para usuarios.
+     */
     public function __construct()
     {
         $this->middleware('auth:usuario');
     }
 
+    /**
+     * Muestra la vista de gestión de estudiantes con paginación.
+     *
+     * @return \Illuminate\View\View
+     */
     public function index()
     {
         $students = alumno::join('seccion', 'alumno.id_seccion', '=', 'seccion.id_seccion')
@@ -25,6 +42,12 @@ class StudentController extends Controller
         return view('admin.manage_students', compact('students'));
     }
 
+    /**
+     * Busca estudiantes por nombre o apellido.
+     *
+     * @param Request $request
+     * @return \Illuminate\View\View
+     */
     public function searchStudent(Request $request)
     {
         $request->validate([
@@ -43,6 +66,12 @@ class StudentController extends Controller
         return view('admin.manage_students', compact('students'));
     }
 
+    /**
+     * Almacena un nuevo estudiante en el sistema.
+     *
+     * @param Request $request
+     * @return \Illuminate\Http\RedirectResponse
+     */
     public function store(Request $request)
     {
         $request->validate([
@@ -61,6 +90,13 @@ class StudentController extends Controller
         return redirect()->route('students.index');
     }
 
+    /**
+     * Actualiza la información de un estudiante existente.
+     *
+     * @param Request $request
+     * @param alumno $estudiante
+     * @return \Illuminate\Http\RedirectResponse
+     */
     public function update(Request $request, alumno $estudiante)
     {
         $request->validate([
@@ -81,6 +117,12 @@ class StudentController extends Controller
         return redirect()->route('students.index');
     }
 
+    /**
+     * Elimina un estudiante del sistema.
+     *
+     * @param alumno $estudiante
+     * @return \Illuminate\Http\RedirectResponse
+     */
     public function destroy(alumno $estudiante)
     {
         $estudiante->delete();

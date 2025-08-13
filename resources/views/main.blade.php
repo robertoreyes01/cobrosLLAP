@@ -116,7 +116,10 @@
                         <p class="text-sm text-center">Gestiona las cuentas de los padres/tutores o empleados</p>
                     </header>
                     <section class="flex justify-center">
-                        <button class="btn bg-[#751711] text-white">Acceder</button>
+                        <button onclick="window.location.href='{{ route('accounts.index') }}'"
+                            class="rounded-sm p-1.75 bg-[#751711] hover:bg-[#5c120e] text-white font-semibold transition-colors duration-200 cursor-pointer shadow-md">
+                            Acceder
+                        </button>
                     </section>
                 </div>
                 <div class="row-start-2 card w-72 m-5">

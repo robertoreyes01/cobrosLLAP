@@ -17,6 +17,8 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
  */
 class alumno extends Model
 {
+    use HasFactory;
+
     /**
      * Nombre de la tabla asociada al modelo.
      * @var string
@@ -28,7 +30,8 @@ class alumno extends Model
      */
     protected $primaryKey = 'id_alumno';
     /**
-     * Indica si el modelo debe gestionar las marcas de tiempo.
+     * Indica si el modelo debe gestionar las marcas de tiempo (created_at, updated_at).
+     *
      * @var bool
      */
     public $timestamps = false;
@@ -43,10 +46,15 @@ class alumno extends Model
         'id_seccion'
     ];
 
+    /**
+     * Obtiene el nombre de la clave de ruta para el modelo.
+     * Utilizado para el model binding en las rutas.
+     *
+     * @return string
+     */
     public function getRouteKeyName()
     {
         return 'id_alumno';
     }
 
-    use HasFactory;
 }

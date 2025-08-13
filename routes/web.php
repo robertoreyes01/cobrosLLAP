@@ -8,6 +8,7 @@ use App\Http\Controllers\MainController;
 use App\Http\Controllers\Charges\ChargesController;
 use App\Http\Controllers\Admin\StudentController;
 use App\Http\Controllers\Admin\PriceController;
+use App\Http\Controllers\Admin\AccountController;
 
 Route::get('/', function () {
     return view('auth.login');
@@ -50,6 +51,11 @@ Route::middleware(['auth:usuario'])->group(function(){
         Route::resource('precios', PriceController::class)
             ->except(['create', 'edit', 'show'])
             ->names('prices');
-
+        Route::resource('cuentas', AccountController::class)
+            ->except(['create', 'edit', 'show', 'update'])
+            ->names('accounts');
+        Route::put('desactivar-cuenta/{cuenta}', [AccountController::class, 'deactivate'])->name('accounts.deactivate');
+        Route::put('activar-cuenta/{cuenta}', [AccountController::class, 'activate'])->name('accounts.activate');
+        Route::get('buscar-cuenta', [AccountController::class, 'searchAccount'])->name('accounts.search');
     });
 });

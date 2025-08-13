@@ -15,6 +15,7 @@
             </button>
         </div>
     </div>
+    
     <div class="place-items-center">
         <h1 class="text-2xl font-bold my-6">Gestión de Estudiantes</h1>
 
@@ -195,8 +196,8 @@
                     <p id="edit-student-description">Haz los cambios necesarios para el estudiante. Clic en guardar
                         cambios al terminar.</p>
                 </header>
-                <section class="place-items-center">
-                    <form method="POST" class="form grid gap-4 w-1/2" id="edit-student-form">
+                <section class="">
+                    <form method="POST" class="form grid gap-4 w-3/5" id="edit-student-form">
                         @csrf
                         @method('PUT')
                         <div class="grid gap-3">
