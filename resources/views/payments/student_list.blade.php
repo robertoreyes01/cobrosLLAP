@@ -1,7 +1,27 @@
 {{--
-    resources/views/payments/student_list.blade.php
-    Vista que muestra la lista de alumnos disponibles por padres/tutores autenticados.
-    Incluye una tabla con los datos de los alumnos y un botón de acción para ver pagos.
+    Vista: Lista de Estudiantes Asociados
+    Ubicación: resources/views/payments/student_list.blade.php
+    Descripción:
+        Vista que muestra la lista de estudiantes asociados a un padre o tutor específico.
+        Permite al padre/tutor autenticado ver todos los estudiantes bajo su responsabilidad
+        y acceder al historial de pagos de cada uno.
+    Variables esperadas:
+        - $padre: App\Models\usuario | Modelo del usuario padre/tutor autenticado con sus datos
+        - $alumnos: Illuminate\Database\Eloquent\Collection | Colección de estudiantes asociados al padre/tutor
+    Funcionalidad:
+        - Muestra información del padre/tutor en el título
+        - Lista todos los estudiantes asociados al padre/tutor
+        - Permite navegar al historial de pagos de cada estudiante
+        - Muestra mensaje cuando no hay estudiantes asociados
+    Componentes:
+        - Tabla de estudiantes con información básica
+        - Botón de acción para ver pagos de cada estudiante
+        - Mensaje informativo cuando no hay datos
+    Navegación:
+        - Al hacer clic en "Ver pagos" se redirige a la vista de registro de pagos del estudiante
+    Restricciones:
+        - Solo accesible para usuarios autenticados
+        - Muestra únicamente estudiantes asociados al padre/tutor autenticado
 --}}
 
 <x-app-layout>

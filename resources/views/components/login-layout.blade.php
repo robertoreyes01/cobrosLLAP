@@ -1,3 +1,28 @@
+{{--
+    Componente: Layout de Página de Login
+    Ubicación: resources/views/components/login-layout.blade.php
+    Descripción:
+        Componente Blade que define el layout específico para las páginas de autenticación.
+        Incluye el header institucional con logo, título, botones de navegación y contenedor
+        para el formulario de login o registro.
+    Funcionalidad:
+        - Header institucional con logo y branding
+        - Botones de navegación entre login y registro
+        - Banner con información institucional
+        - Contenedor principal para formularios de autenticación
+        - Integración con ToastMagic para notificaciones
+        - Estilos CSS con Bootstrap, Basecoat y Vite
+    Dependencias:
+        - ToastMagic para notificaciones
+        - Bootstrap CSS para estilos adicionales
+        - Basecoat CSS para estilos base
+        - Vite para compilación de assets
+    Variables esperadas:
+        - $slot: Contenido del formulario de login o registro
+    Rutas utilizadas:
+        - route('signInForm'): Para el formulario de registro
+        - route('loginForm'): Para el formulario de login
+--}}
 <!DOCTYPE html>
 <html lang="es">
 

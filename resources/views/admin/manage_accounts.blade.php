@@ -64,6 +64,7 @@
             </div>
         @endif
 
+        {{-- Mensaje temporal de éxito --}}
         @if (session('success'))
             <div class="mb-6 p-4 bg-green-50 border border-green-200 rounded-md">
                 <h2 class="text-base font-semibold text-green-700 mb-2">Éxito</h2>

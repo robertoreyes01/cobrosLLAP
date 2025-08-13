@@ -1,7 +1,39 @@
 {{--
-    resources/views/main.blade.php
-    Vista principal del sistema. Muestra accesos rápidos a las funcionalidades según el rol del usuario autenticado.
-    Incluye tarjetas de acceso para padres/tutores, empleados y administradores.
+    Vista: Menú Principal del Sistema
+    Ubicación: resources/views/main.blade.php
+    Descripción:
+        Vista principal que funciona como dashboard del sistema, mostrando accesos rápidos
+        a las funcionalidades según el rol del usuario autenticado.
+        Proporciona una interfaz intuitiva con tarjetas de navegación específicas por rol.
+    Variables esperadas:
+        - Auth::user(): Usuario autenticado con su rol (id_rol)
+    Funcionalidad por Rol:
+        - Rol 1 (Administrador): Acceso completo a todas las funciones del sistema
+            * Gestión de Cobros
+            * Gestión de Cuentas
+            * Gestión de Estudiantes
+            * Gestión de Precios
+        - Rol 2 (Secretario): Acceso a funciones de gestión operativa
+            * Gestión de Cobros
+            * Gestión de Estudiantes
+        - Rol 3 (Padre/Tutor): Acceso limitado a información personal
+            * Ver Pagos de sus estudiantes asociados
+    Componentes:
+        - Tarjetas de navegación con iconos descriptivos
+        - Botones de acceso directo a funcionalidades
+        - Layout responsivo con grid adaptativo
+        - Iconos SVG para mejor experiencia visual
+    Características:
+        - Interfaz adaptativa según el rol del usuario
+        - Navegación directa sin menús complejos
+        - Diseño visual consistente con el sistema
+        - Acceso rápido a funciones principales
+    Rutas utilizadas:
+        - route('payments.student'): Para ver pagos de estudiantes
+        - route('charges.parents'): Para gestión de cobros
+        - route('accounts.index'): Para gestión de cuentas
+        - route('students.index'): Para gestión de estudiantes
+        - route('prices.index'): Para gestión de precios
 --}}
 
 <x-app-layout>

@@ -1,8 +1,35 @@
 {{--
-    resources/views/profile/show.blade.php
-    Vista de perfil de usuario.
-    Permite visualizar y editar información personal, correo y contraseña del usuario autenticado.
-    Incluye formularios modales para edición de perfil, cambio de correo y cambio de contraseña.
+    Vista: Perfil de Usuario
+    Ubicación: resources/views/profile/show.blade.php
+    Descripción:
+        Vista que permite al usuario autenticado visualizar y editar su información personal.
+        Incluye gestión de datos personales, correo electrónico y contraseña mediante formularios modales.
+    Variables esperadas:
+        - Auth::user(): Usuario autenticado con todos sus datos del modelo usuario
+        - $errors: Illuminate\Support\ViewErrorBag | Errores de validación si existen
+    Funcionalidad:
+        - Visualización de información personal del usuario
+        - Edición de nombres y apellidos mediante modal
+        - Cambio de correo electrónico con validación
+        - Cambio de contraseña con confirmación
+        - Validación de formularios y manejo de errores
+    Componentes:
+        - Tarjeta de información de perfil con datos personales
+        - Tarjeta de cuenta con información de correo
+        - Modal para editar información personal
+        - Modal para cambiar correo electrónico
+        - Modal para cambiar contraseña
+        - Sección de errores de validación
+    Características:
+        - Formularios con validación del lado del servidor
+        - Confirmación de contraseña para cambios de seguridad
+        - Interfaz modal para ediciones sin recargar página
+        - Validación de correo electrónico
+        - Límites de caracteres en campos de texto
+    Rutas utilizadas:
+        - route('profile.update'): Para actualizar información personal
+        - route('change.email'): Para cambiar correo electrónico
+        - route('change.password'): Para cambiar contraseña
 --}}
 
 <x-app-layout>

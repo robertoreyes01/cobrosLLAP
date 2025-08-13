@@ -1,18 +1,34 @@
 {{--
-    resources/views/payments/register.blade.php
-    Vista que muestra el historial de pagos de un alumno específico.
-    Incluye una tabla con los detalles de cada pago realizado por el alumno.
+    Vista: Registro de Pagos de Estudiante
+    Ubicación: resources/views/payments/register.blade.php
+    Descripción:
+        Vista que muestra el historial completo de pagos de un estudiante específico.
+        Permite visualizar, crear, editar y eliminar pagos según el rol del usuario.
+        Incluye funcionalidades específicas por rol y cálculo automático de montos.
+    Variables esperadas:
+        - $alumno: App\Models\alumno | Modelo del estudiante con sus datos
+        - $alumno_nombre: string | Primer nombre del estudiante
+        - $alumno_apellido: string | Primer apellido del estudiante
+        - $pagos: Illuminate\Database\Eloquent\Collection | Colección de pagos del estudiante
+        - $seccion: App\Models\seccion | Modelo de la sección del estudiante
+        - $mes: string | Mes actual para sugerir próximo pago de mensualidad
+    Funcionalidad por Rol:
+        - Rol 1 (Administrador): Acceso completo (crear, editar, eliminar pagos)
+        - Rol 2 (Secretario): Editar pagos
+        - Rol 3 (Padre/Tutor): Solo visualización de pagos
+    Componentes:
+        - Tabla de historial de pagos
+        - Modal para crear nuevo pago con cálculo automático
+        - Modal para editar pago existente
+        - Modal de confirmación para eliminar pago
+        - Validación de formularios y mensajes de error
+    Características especiales:
+        - Cálculo automático de montos según tipo de pago seleccionado
+        - Sugerencia automática del próximo mes de mensualidad
+        - Validación de permisos por rol de usuario
 --}}
 
 <x-app-layout>
-    {{-- <a href="javascript:window.history.back();" class="cursor-pointer py-2 mx-2">
-        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
-            stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
-            class="lucide lucide-move-left-icon lucide-move-left">
-            <path d="M6 8L2 12L6 16" />
-            <path d="M2 12H22" />
-        </svg>
-    </a> --}}
     @if (Auth::user()->id_rol == 1)
         <div class="relative">
             <div class="absolute right-108.5 pr-0.5">

@@ -1,3 +1,28 @@
+{{--
+    Vista: Gestión de Precios de Grado
+    Ubicación: resources/views/admin/manage_price.blade.php
+    Descripción:
+        Vista administrativa para gestionar los precios de matrícula y mensualidad de las diferentes secciones/grados del sistema educativo.
+        Permite crear, editar y eliminar secciones con sus respectivos precios.
+    Variables esperadas:
+        - $prices: Illuminate\Database\Eloquent\Collection | Colección de secciones con sus precios, cada una con los atributos:
+            - id_seccion
+            - nombre
+            - matricula
+            - mensualidad
+    Funcionalidad:
+        - Muestra una tabla con todas las secciones y sus precios.
+        - Permite agregar nuevas secciones mediante un modal.
+        - Permite editar secciones existentes mediante un modal.
+        - Permite eliminar secciones con confirmación.
+        - Muestra mensajes de error si existen.
+        - Incluye validación de formularios.
+    Componentes:
+        - Modal para agregar nueva sección
+        - Modal para editar sección existente
+        - Modal de confirmación para eliminar sección
+        - Tabla responsiva con acciones CRUD
+--}}
 <x-app-layout>
     <div class="relative">
         <div class="absolute top-1 right-138 pr-0.5">

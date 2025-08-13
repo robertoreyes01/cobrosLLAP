@@ -1,3 +1,29 @@
+{{--
+    Componente: Layout Principal de la Aplicación
+    Ubicación: resources/views/components/app-layout.blade.php
+    Descripción:
+        Componente Blade que define el layout principal de la aplicación.
+        Incluye el header con navegación, menú desplegable según el rol del usuario,
+        logo institucional y el contenedor principal para el contenido.
+    Funcionalidad:
+        - Header con navegación y menú desplegable
+        - Menú contextual según el rol del usuario autenticado:
+            - Rol 1 (Administrador): Acceso completo a todas las funciones
+            - Rol 2 (Secretario): Gestión de cobros y estudiantes
+            - Rol 3 (Padre/Tutor): Visualización de pagos
+        - Logo institucional centrado
+        - Lema institucional
+        - Integración con ToastMagic para notificaciones
+        - Estilos CSS con Basecoat y Vite
+    Dependencias:
+        - ToastMagic para notificaciones
+        - Basecoat CSS para estilos
+        - Vite para compilación de assets
+        - Autenticación de Laravel
+    Variables esperadas:
+        - $slot: Contenido principal de la vista
+        - Auth::user(): Usuario autenticado con su rol
+--}}
 <!DOCTYPE html>
 <html lang="es">
 

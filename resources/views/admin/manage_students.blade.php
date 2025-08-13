@@ -1,3 +1,33 @@
+{{--
+    Vista: Gestión de Estudiantes
+    Ubicación: resources/views/admin/manage_students.blade.php
+    Descripción:
+        Vista administrativa para gestionar los estudiantes del sistema educativo.
+        Permite crear, editar, eliminar y buscar estudiantes, incluyendo su información personal y sección asignada.
+    Variables esperadas:
+        - $students: Illuminate\Pagination\LengthAwarePaginator | Colección paginada de estudiantes, cada uno con los atributos:
+            - id_alumno
+            - nombres
+            - apellidos
+            - id_seccion
+            - seccion (nombre de la sección obtenido por join)
+    Funcionalidad:
+        - Muestra una tabla paginada con todos los estudiantes.
+        - Permite buscar estudiantes por nombre o apellido.
+        - Permite agregar nuevos estudiantes mediante un modal.
+        - Permite editar estudiantes existentes mediante un modal.
+        - Permite eliminar estudiantes con confirmación.
+        - Muestra mensajes de error si existen.
+        - Incluye validación de formularios.
+        - Incluye paginación de resultados.
+    Componentes:
+        - Formulario de búsqueda con botón de reset
+        - Modal para agregar nuevo estudiante
+        - Modal para editar estudiante existente
+        - Modal de confirmación para eliminar estudiante
+        - Tabla responsiva con acciones CRUD
+        - Paginación de resultados
+--}}
 <x-app-layout>
     <div class="relative">
         <div class="absolute top-14 right-118 pr-0.5">
