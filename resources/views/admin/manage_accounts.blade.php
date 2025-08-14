@@ -1,3 +1,42 @@
+{{--
+    Vista: Gestión de Cuentas de Usuario
+    Ubicación: resources/views/admin/manage_accounts.blade.php
+    Descripción:
+        Vista administrativa para gestionar las cuentas de usuarios del sistema.
+        Permite crear nuevos empleados, buscar usuarios existentes, activar/desactivar cuentas
+        y eliminar usuarios permanentemente.
+    Variables esperadas:
+        - $accounts: Illuminate\Pagination\LengthAwarePaginator | Colección paginada de usuarios, cada uno con los atributos:
+            - id_usuario
+            - primer_nombre, segundo_nombre
+            - primer_apellido, segundo_apellido
+            - correo
+            - estado (1: Activo, 0: Inactivo)
+            - id_rol (1: Administrador, 2: Empleado, 3: Padre/Tutor)
+        - $errors: Illuminate\Support\ViewErrorBag | Errores de validación si existen
+    Funcionalidad:
+        - Muestra una tabla paginada con todos los usuarios del sistema
+        - Permite buscar usuarios por nombre o apellido
+        - Permite crear nuevos empleados con contraseña temporal automática
+        - Permite activar/desactivar cuentas de usuario
+        - Permite eliminar usuarios permanentemente
+        - Muestra mensajes de error y éxito
+        - Incluye paginación de resultados
+    Componentes:
+        - Formulario de búsqueda con botón de reset
+        - Tabla de usuarios con información completa
+        - Modal para crear nuevo empleado
+        - Modal de confirmación para eliminar usuario
+        - Modal de confirmación para desactivar usuario
+        - Modal de confirmación para activar usuario
+        - Paginación de resultados
+    Características especiales:
+        - Generación automática de contraseñas temporales
+        - Validación de formularios del lado del servidor
+        - Confirmaciones antes de acciones destructivas
+        - Gestión de estados de cuenta (activo/inactivo)
+        - Interfaz responsiva con modales
+--}}
 <x-app-layout>
 
     <div class="relative">

@@ -45,7 +45,7 @@
             </button>
         </div>
     </div>
-    
+
     <div class="place-items-center">
         <h1 class="text-2xl font-bold my-6">Gestión de Estudiantes</h1>
 
@@ -112,12 +112,9 @@
                                 <td>{{ $student->apellidos }}</td>
                                 <td>{{ $student->seccion }}</td>
                                 <td class="flex justify-center">
-                                    <button data-tooltip="Editar"
-                                        data-id="{{ $student->id_alumno }}"
-                                        data-names="{{ $student->nombres }}" 
-                                        data-lastNames="{{ $student->apellidos }}"
-                                        data-section="{{ $student->id_seccion }}"
-                                        onclick="openEditStudentDialog(this)"
+                                    <button data-tooltip="Editar" data-id="{{ $student->id_alumno }}"
+                                        data-names="{{ $student->nombres }}" data-lastNames="{{ $student->apellidos }}"
+                                        data-section="{{ $student->id_seccion }}" onclick="openEditStudentDialog(this)"
                                         class="mx-0.5 rounded-sm p-1.5 bg-[#751711] hover:bg-[#5c120e] text-white font-semibold transition-colors duration-200 cursor-pointer shadow-md">
                                         <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20"
                                             viewBox="0 0 24 24" fill="none" stroke="#ffffff" stroke-width="2.25"
@@ -140,6 +137,17 @@
                                             <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6" />
                                             <path d="M3 6h18" />
                                             <path d="M8 6V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2" />
+                                        </svg>
+                                    </button>
+                                    <button data-tooltip="Asignar padre/tutor"
+                                        data-id="{{ $student->id_alumno }}"
+                                        data-names="{{ $student->nombres }}"
+                                        onclick="openAssignParentDialog(this)"
+                                        class="mx-0.5 rounded-sm p-1.5 bg-[#751711] hover:bg-[#5c120e] text-white font-semibold transition-colors duration-200 cursor-pointer shadow-md">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20"
+                                            viewBox="0 -960 960 960" fill="#e3e3e3">
+                                            <path
+                                                d="M480-880q50 0 85 35t35 85q0 50-35 85t-85 35q-50 0-85-35t-35-85q0-50 35-85t85-35Zm0 280q47 0 93 11t83 31q38 19 61 45t23 57v232q0 17-8 33.5T710-160q-14 14-32.5 26T636-112v-90q0-38-52.5-62T480-288q-50 0-96.5 20.5T326-214q38 15 78 21t82 7h34v104q-7 2-14.5 2H490q-36 0-82.5-8T319-113q-42-17-70.5-44.5T220-224v-232q0-31 23-57t60-45q38-20 84-31t93-11Zm0 240q33 0 56.5-23.5T560-440q0-33-23.5-56.5T480-520q-33 0-56.5 23.5T400-440q0 33 23.5 56.5T480-360Z" />
                                         </svg>
                                     </button>
                                 </td>
@@ -285,8 +293,7 @@
                 </header>
 
                 <footer>
-                    <button class="btn-outline"
-                        onclick="document.getElementById('delete-student').close()">
+                    <button class="btn-outline" onclick="document.getElementById('delete-student').close()">
                         Cancelar
                     </button>
                     <form method="POST" id="delete-student-form">
@@ -297,6 +304,103 @@
                             Eliminar
                         </button>
                     </form>
+                </footer>
+                <form method="dialog">
+                    <button aria-label="Close dialog">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                            fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                            stroke-linejoin="round" class="lucide lucide-x-icon lucide-x">
+                            <path d="M18 6 6 18" />
+                            <path d="m6 6 12 12" />
+                        </svg>
+                    </button>
+                </form>
+            </article>
+        </dialog>
+
+        <!-- Dialog para asignar padre/tutor -->
+        <dialog id="assign-parent" class="dialog w-full sm:max-w-[425px] max-h-[612px]"
+            aria-labelledby="assign-parent-title" aria-describedby="assign-parent-description"
+            onclick="this.close()">
+            <article onclick="event.stopPropagation()">
+                <header>
+                    <h2 id="assign-parent-title" class="text-lg font-semibold">Asignar Padre o Tutor</h2>
+                    <p id="assign-parent-description">Selecciona el padre/tutor que deseas asignar a <span id="student-names"></span>.</p>
+                </header>
+                <section class="">
+                    <form method="POST" class="form grid gap-4 w-full" id="assign-parent-form">
+                        @csrf
+                        <div class="grid gap-3">
+                            <label for="select-parent">Padres/Tutores</label>
+                            <div class="select" id="select-parent">
+                                <button type="button" class="btn-outline justify-between font-normal w-full"
+                                    id="select-parent-trigger" aria-haspopup="listbox" aria-expanded="false"
+                                    aria-controls="select-parent-listbox">
+                                    <span class="truncate text-muted-foreground">Selecciona un padre/tutor</span>
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+                                        viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                                        stroke-linecap="round" stroke-linejoin="round"
+                                        class="lucide lucide-chevrons-up-down-icon lucide-chevrons-up-down text-muted-foreground opacity-50 shrink-0">
+                                        <path d="m7 15 5 5 5-5" />
+                                        <path d="m7 9 5-5 5 5" />
+                                    </svg>
+                                </button>
+
+                                <div id="select-parent-popover" data-popover aria-hidden="true">
+                                    <header>
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+                                            viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                            stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                                            class="lucide lucide-search-icon lucide-search">
+                                            <circle cx="11" cy="11" r="8" />
+                                            <path d="m21 21-4.3-4.3" />
+                                        </svg>
+                                        <input type="text" value="" placeholder="Buscar padres/tutores..."
+                                            autocomplete="off" autocorrect="off" spellcheck="false"
+                                            aria-autocomplete="list" role="combobox" aria-expanded="false"
+                                            aria-controls="select-parent-listbox"
+                                            aria-labelledby="select-parent-trigger" />
+                                    </header>
+                                    <section class="overflow-y-auto scrollbar max-h-64">
+                                        <div role="listbox" id="select-parent-listbox" aria-orientation="vertical"
+                                            aria-labelledby="select-parent-trigger">
+                                            <div role="group" aria-labelledby="group-label-select-parent-items-1">
+                                                <div role="heading" id="group-label-select-parent-items-1">
+                                                    Padres/Tutores
+                                                </div>
+                                                @if ($parents->count() > 0)
+                                                    @foreach ($parents as $parent)
+                                                        <div id="select-parent-items-1-{{ $loop->iteration }}"
+                                                            role="option" data-value="{{ $parent->id_usuario }}">
+                                                            <span class="truncate">{{ $parent->primer_nombre }}
+                                                                {{ $parent->segundo_nombre }}
+                                                                {{ $parent->primer_apellido }}
+                                                                {{ $parent->segundo_apellido }}
+                                                            </span>
+                                                        </div>
+                                                    @endforeach
+                                                @else
+                                                    <div role="option" aria-selected="false" tabindex="0">No hay
+                                                        padres/tutores registrados</div>
+                                                @endif
+                                            </div>
+                                        </div>
+                                    </section>
+                                </div>
+                                <input type="hidden" name="id_padre" value="" />
+                            </div>
+                        </div>
+                        <input type="hidden" name="id_estudiante" id="id-student" value="" />
+                    </form>
+                </section>
+                <footer class="mt-4">
+                    <button class="btn-outline" onclick="this.closest('dialog').close()">Cancelar</button>
+                    <button
+                        class="rounded-sm py-1 px-3.5 bg-[#751711] hover:bg-[#5c120e] text-sm text-white font-semibold transition-colors duration-200 cursor-pointer"
+                        type="submit" form="assign-parent-form"
+                        onclick="document.getElementById('assign-parent-form').submit()">
+                        Aceptar
+                    </button>
                 </footer>
                 <form method="dialog">
                     <button aria-label="Close dialog">
@@ -330,7 +434,7 @@
         document.getElementById('edit-student').showModal();
     }
 
-    function openDeleteStudentDialog(button){
+    function openDeleteStudentDialog(button) {
         const id = button.getAttribute('data-id');
         const names = button.getAttribute('data-names');
         const lastNames = button.getAttribute('data-lastNames');
@@ -342,5 +446,18 @@
         form.action = `{{ route('students.destroy', ':id') }}`.replace(':id', id);
 
         document.getElementById('delete-student').showModal();
+    }
+
+    function openAssignParentDialog(button) {
+        const id= button.getAttribute('data-id');
+        const names = button.getAttribute('data-names');
+
+        document.getElementById('id-student').value = id;
+        document.getElementById('student-names').textContent = names;
+
+        const form = document.getElementById('assign-parent-form')
+        form.action = `{{ route('assign.parent') }}`;
+
+        document.getElementById('assign-parent').showModal();
     }
 </script>

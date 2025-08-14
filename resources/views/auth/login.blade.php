@@ -37,20 +37,10 @@
             </div>
             <button
                 class="w-full py-2 px-4 rounded bg-[#751711] hover:bg-[#5c120e] text-white font-semibold transition-colors duration-200"
-                type="submit">Iniciar sesión</button>
-
-            <div class="mb-3 grid grid-cols-2 grid-rows-1 gap-4">
-                <div class="items-center space-x-2">
-                    <label class="label gap-3">
-                        <input type="checkbox" class="input">
-                        Recordarme
-                    </label>
-                </div>
-                <div class="flex justify-end items-center space-x-2">
-                    <a href="#">¿Olvidaste tu contraseña?</a>
-                </div>
-            </div>
+                type="submit">Iniciar sesión
+            </button>
         </form>
+        <button class="btn-link" >¿Olvidaste tu contraseña?</button>
         @if ($errors->any())
             <div class="mb-6 p-4 bg-red-50 border border-red-200 rounded-md">
                 <h2 class="text-base font-semibold text-red-700 mb-2">Error</h2>

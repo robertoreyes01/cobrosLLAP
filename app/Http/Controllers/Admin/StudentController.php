@@ -7,6 +7,8 @@ use Illuminate\Http\Request;
 use App\Models\alumno;
 use Illuminate\Support\Str;
 use Devrabiul\ToastMagic\Facades\ToastMagic;
+use App\Models\usuario;
+use App\Models\padre;
 
 /**
  * Class StudentController
@@ -27,6 +29,14 @@ class StudentController extends Controller
         $this->middleware('auth:usuario');
     }
 
+    private function getParents()
+    {
+        return usuario::where('id_rol', 3)
+            ->select('id_usuario', 'primer_nombre', 'segundo_nombre', 'primer_apellido', 'segundo_apellido')
+            ->orderBy('primer_nombre', 'asc')
+            ->get();
+    }
+
     /**
      * Muestra la vista de gestión de estudiantes con paginación.
      *
@@ -39,7 +49,9 @@ class StudentController extends Controller
             ->orderBy('id_alumno', 'desc')
             ->paginate(9);
 
-        return view('admin.manage_students', compact('students'));
+        $parents = $this->getParents();
+
+        return view('admin.manage_students', compact('students', 'parents'));
     }
 
     /**
@@ -63,7 +75,9 @@ class StudentController extends Controller
             ->orderBy('id_alumno', 'desc')
             ->paginate(9);
 
-        return view('admin.manage_students', compact('students'));
+        $parents = $this->getParents();
+
+        return view('admin.manage_students', compact('students', 'parents'));
     }
 
     /**
@@ -128,6 +142,22 @@ class StudentController extends Controller
         $estudiante->delete();
 
         ToastMagic::success('Estudiante eliminado correctamente');
+        return redirect()->route('students.index');
+    }
+
+    public function assignParent(Request $request)
+    {
+        $request->validate([
+            'id_estudiante' => 'required|exists:alumno,id_alumno',
+            'id_padre' => 'required|exists:usuario,id_usuario'
+        ]);
+        
+        $parent = new padre();
+        $parent->id_alumno = $request->id_estudiante;
+        $parent->id_usuario = $request->id_padre;
+        $parent->save();
+
+        ToastMagic::success('Padre/tutor asignado correctamente');
         return redirect()->route('students.index');
     }
 }

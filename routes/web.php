@@ -42,7 +42,7 @@ Route::middleware(['auth:usuario'])->group(function(){
             ->names('students');
         Route::get('buscar-estudiante', [StudentController::class, 'searchStudent'])->name('search.student');
         Route::put('editar-pago/{pago}', [PaymentController::class, 'updatePayment'])->name('payment.update');
-
+        Route::post('asignar-padre', [StudentController::class, 'assignParent'])->name('assign.parent');
     });
 
     Route::middleware(['check.user.type:1'])->group(function(){
