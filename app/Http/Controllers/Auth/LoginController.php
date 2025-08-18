@@ -10,6 +10,7 @@ use App\Models\usuario;
 use App\Models\padre;
 use Devrabiul\ToastMagic\Facades\ToastMagic;
 use Illuminate\Validation\ValidationException;
+use Illuminate\Auth\Events\Registered;
 
 class LoginController extends Controller
 {
@@ -35,7 +36,7 @@ class LoginController extends Controller
             // Verificar si el login fue exitoso
             if (Auth::check() && $usuario->estado == '1') {
                 $request->session()->regenerate();
-                return redirect()->route('main');
+                return redirect()->intended(route('main'));
             } else {
                 Auth::logout();
                 return redirect()->route('loginForm')->with('error', 'Tu cuenta ha sido desactivada');
@@ -62,7 +63,7 @@ class LoginController extends Controller
         return view('auth.signIn');
     }
 
-    public function sigIn(Request $request)
+    public function signIn(Request $request)
     {
         $request->validate([
             'primer_nombre' => 'required|string',
@@ -86,7 +87,7 @@ class LoginController extends Controller
         $usuario->primer_apellido = $request->primer_apellido;
         $usuario->segundo_apellido = $request->segundo_apellido;
         $usuario->correo = $request->correo;
-        $usuario->password = Hash::make($request->password);
+        $usuario->password = Hash::make($request->contrasena);
         $usuario->estado = '1';
         $usuario->id_rol = '3';
         $usuario->save();
@@ -94,6 +95,9 @@ class LoginController extends Controller
         $padre = new padre();
         $padre->id_usuario = $usuario->id_usuario;
         $padre->save();
+
+        // Send verification email explicitly
+        $usuario->sendEmailVerificationNotification();
 
         ToastMagic::info('Por favor revisa tu correo');
         return redirect()->route('loginForm');

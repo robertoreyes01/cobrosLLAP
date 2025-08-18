@@ -5,6 +5,8 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Contracts\Auth\MustVerifyEmail;
+use Illuminate\Notifications\Notifiable;
 
 /**
  * Modelo de usuario para la autenticación y gestión de usuarios en la aplicación.
@@ -22,8 +24,10 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
  * @property string $estado          Estado del usuario (activo/inactivo)
  * @property int $id_rol             ID de rol asociado al usuario
  */
-class usuario extends Authenticatable
+class usuario extends Authenticatable implements MustVerifyEmail
 {
+    use Notifiable;
+
     /**
      * Nombre de la tabla asociada al modelo.
      *
@@ -51,8 +55,22 @@ class usuario extends Authenticatable
         'correo',             
         'password',           
         'estado',             
-        'id_rol',             
+        'id_rol',
+        'email_verified_at',
     ];
+
+    /**
+     * Get the attributes that should be cast.
+     *
+     * @return array<string, string>
+     */
+    protected function casts(): array
+    {
+        return [
+            'email_verified_at' => 'datetime',
+            'password' => 'hashed',
+        ];
+    }
 
     /**
      * Los atributos que deben estar ocultos para los arrays.
@@ -99,6 +117,23 @@ class usuario extends Authenticatable
      * @var string
      */
     protected $primaryKey = 'id_usuario';
+
+    /**
+     * Route notifications for the mail channel.
+     * Ensures notifications use the 'correo' column instead of the default 'email'.
+     */
+    public function routeNotificationForMail($notification): string|array
+    {
+        return $this->correo;
+    }
+
+    /**
+     * Get the email address that should be used for verification.
+     */
+    public function getEmailForVerification(): string
+    {
+        return $this->correo;
+    }
 
     use HasFactory;
 }

@@ -9,6 +9,8 @@ use App\Http\Controllers\Charges\ChargesController;
 use App\Http\Controllers\Admin\StudentController;
 use App\Http\Controllers\Admin\PriceController;
 use App\Http\Controllers\Admin\AccountController;
+use Illuminate\Foundation\Auth\EmailVerificationRequest;
+use Illuminate\Http\Request;
 
 Route::get('/', function () {
     return view('auth.login');
@@ -18,9 +20,25 @@ Route::get('login', [LoginController::class, 'LoginForm'])->name('loginForm');
 Route::post('login', [LoginController::class, 'login'])->name('login');
 Route::post('logout', [LoginController::class, 'logout'])->name('logout');
 Route::get('signIn', [LoginController::class, 'signInForm'])->name('signInForm');
-Route::post('signIn', [LoginController::class, 'sigIn'])->name('signIn');
+Route::post('signIn', [LoginController::class, 'signIn'])->name('signIn');
 
-Route::middleware(['auth:usuario'])->group(function(){
+Route::get('/email/verify', function () {
+    return view('auth.verify-email');
+})->middleware('auth:usuario')->name('verification.notice');
+
+Route::get('/email/verify/{id}/{hash}', function (EmailVerificationRequest $request) {
+    $request->fulfill();
+ 
+    return redirect('/menu-principal');
+})->middleware(['auth:usuario', 'signed'])->name('verification.verify');
+
+Route::post('/email/verification-notification', function (Request $request) {
+    $request->user()->sendEmailVerificationNotification();
+ 
+    return back()->with('message', 'Se ha enviado un nuevo enlace de verificación a tu correo electrónico.');
+})->middleware(['auth:usuario', 'throttle:6,1'])->name('verification.resend');
+
+Route::middleware(['auth:usuario', 'verified'])->group(function(){
     Route::get('menu-principal', [MainController::class, 'show'])->name('main');
     Route::get('perfil', [ProfileController::class, 'show'])->name('profile.show');
     Route::put('perfil/{usuario}', [ProfileController::class, 'update'])->name('profile.update');

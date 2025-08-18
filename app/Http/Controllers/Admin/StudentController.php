@@ -14,7 +14,7 @@ use App\Models\padre;
  * Class StudentController
  * 
  * Controlador para la gestión de estudiantes del sistema educativo.
- * Permite crear, leer, actualizar, eliminar y buscar estudiantes, incluyendo su información de sección.
+ * Permite crear, leer, actualizar, eliminar y buscar estudiantes, incluyendo su información de sección y asignación de padre/tutor.
  * Aplica el middleware de autenticación para el guard 'usuario'.
  */
 class StudentController extends Controller
@@ -29,6 +29,11 @@ class StudentController extends Controller
         $this->middleware('auth:usuario');
     }
 
+    /**
+     * Obtiene todos los padres/tutores registrados en el sistema.
+     *
+     * @return \Illuminate\Database\Eloquent\Collection
+     */
     private function getParents()
     {
         return usuario::where('id_rol', 3)
@@ -145,6 +150,12 @@ class StudentController extends Controller
         return redirect()->route('students.index');
     }
 
+    /**
+     * Asigna un padre/tutor a un estudiante.
+     *
+     * @param Request $request
+     * @return \Illuminate\Http\RedirectResponse
+     */
     public function assignParent(Request $request)
     {
         $request->validate([

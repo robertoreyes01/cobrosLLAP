@@ -40,7 +40,7 @@
                 type="submit">Iniciar sesión
             </button>
         </form>
-        <button class="btn-link" >¿Olvidaste tu contraseña?</button>
+        <button class="btn-link m-0 p-0">¿Olvidaste tu contraseña?</button>
         @if ($errors->any())
             <div class="mb-6 p-4 bg-red-50 border border-red-200 rounded-md">
                 <h2 class="text-base font-semibold text-red-700 mb-2">Error</h2>
@@ -52,5 +52,4 @@
             </div>
         @endif
     </div>
-
 </x-login-layout>
