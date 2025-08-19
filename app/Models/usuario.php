@@ -7,6 +7,7 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Notifications\Notifiable;
+use Illuminate\Auth\Passwords\CanResetPassword;
 
 /**
  * Modelo de usuario para la autenticación y gestión de usuarios en la aplicación.
@@ -26,7 +27,7 @@ use Illuminate\Notifications\Notifiable;
  */
 class usuario extends Authenticatable implements MustVerifyEmail
 {
-    use Notifiable;
+    use Notifiable, CanResetPassword, HasFactory;
 
     /**
      * Nombre de la tabla asociada al modelo.
@@ -135,5 +136,11 @@ class usuario extends Authenticatable implements MustVerifyEmail
         return $this->correo;
     }
 
-    use HasFactory;
+    /**
+     * Get the email address that should be used for password reset.
+     */
+    public function getEmailForPasswordReset(): string
+    {
+        return $this->correo;
+    }
 }
