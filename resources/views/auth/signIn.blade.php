@@ -1,8 +1,37 @@
 {{--
-    resources/views/auth/signIn.blade.php
-    Vista para el registro de nuevos usuarios.
-    Muestra un formulario para crear una nueva cuenta, solicitando datos personales y credenciales.
-    Utiliza el layout <x-login-layout> para mantener la coherencia visual.
+    Vista: Registro de Nuevo Usuario
+    Ubicación: resources/views/auth/signIn.blade.php
+    Descripción:
+        Vista para el registro de nuevos usuarios (padres/tutores) en el sistema.
+        Muestra un formulario completo para crear una nueva cuenta con validación
+        de datos personales y credenciales seguras.
+    Variables esperadas:
+        - $errors: Illuminate\Support\ViewErrorBag | Errores de validación si existen
+    Funcionalidad:
+        - Formulario de registro con datos personales completos
+        - Validación de contraseña con requisitos específicos
+        - Confirmación de contraseña para evitar errores
+        - Creación automática de usuario y registro padre
+        - Envío de verificación por email
+        - Muestra mensajes de error de validación
+    Componentes:
+        - Campos de nombres (primer y segundo nombre)
+        - Campos de apellidos (primer y segundo apellido)
+        - Campo de correo electrónico con validación
+        - Campo de contraseña con requisitos de seguridad
+        - Campo de confirmación de contraseña
+        - Instrucciones de requisitos de contraseña
+        - Botón de creación de cuenta
+        - Sección de errores de validación
+    Características:
+        - Validación de contraseña robusta (mínimo 8 caracteres, mayúsculas, minúsculas, números)
+        - Prevención de espacios y emojis en contraseñas
+        - Interfaz responsiva con grid layout
+        - Iconos descriptivos para campos de entrada
+        - Indicadores visuales de campos obligatorios
+        - Mensajes informativos para el usuario
+    Ruta asociada:
+        - POST /signIn (signIn)
 --}}
 
 <x-login-layout>

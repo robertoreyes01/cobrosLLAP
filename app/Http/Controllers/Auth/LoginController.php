@@ -34,6 +34,7 @@ class LoginController extends Controller
     /**
      * Procesa el intento de login del usuario.
      * Valida credenciales, verifica estado de cuenta y redirige según el resultado.
+     * Recuerda el usuario si se marca la casilla de recordar.
      *
      * @param Request $request
      * @return \Illuminate\Http\RedirectResponse
@@ -57,7 +58,7 @@ class LoginController extends Controller
                 $request->session()->regenerate();
                 return redirect()->intended(route('main'));
             }
-            
+
             return redirect()->route('loginForm')->with('error', 'Tu cuenta ha sido desactivada');
         }
 

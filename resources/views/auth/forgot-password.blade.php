@@ -1,3 +1,31 @@
+{{--
+    Vista: Recuperación de Contraseña
+    Ubicación: resources/views/auth/forgot-password.blade.php
+    Descripción:
+        Vista que permite a los usuarios solicitar el restablecimiento de su contraseña
+        mediante el envío de un enlace de recuperación a su correo electrónico.
+    Variables esperadas:
+        - $errors: Illuminate\Support\ViewErrorBag | Errores de validación si existen
+        - session('status'): string | Mensaje de éxito si el enlace fue enviado
+    Funcionalidad:
+        - Formulario para ingresar correo electrónico
+        - Validación del correo en el servidor
+        - Envío de enlace de recuperación por email
+        - Muestra mensajes de éxito y error
+    Componentes:
+        - Formulario con campo de correo electrónico
+        - Icono de email en el campo de entrada
+        - Botón de envío del formulario
+        - Sección de mensajes de estado
+        - Sección de errores de validación
+    Características:
+        - Interfaz limpia y centrada
+        - Validación visual con iconos
+        - Mensajes informativos para el usuario
+        - Integración con el sistema de recuperación de Laravel
+    Ruta asociada:
+        - POST /olvidar-contrasena (password.email)
+--}}
 <x-login-layout>
     <div class="place-items-center">
         <div class="card w-3/4 max-w-md my-4">

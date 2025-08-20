@@ -1,3 +1,36 @@
+{{--
+    Vista: Restablecimiento de Contraseña
+    Ubicación: resources/views/auth/reset-password.blade.php
+    Descripción:
+        Vista que permite a los usuarios establecer una nueva contraseña después de
+        haber solicitado la recuperación de su cuenta mediante el enlace enviado por email.
+    Variables esperadas:
+        - $token: string | Token de restablecimiento recibido por email
+        - $errors: Illuminate\Support\ViewErrorBag | Errores de validación si existen
+        - session('status'): string | Mensaje de éxito si la contraseña fue actualizada
+    Funcionalidad:
+        - Formulario para ingresar nueva contraseña y confirmación
+        - Validación de contraseña con requisitos específicos
+        - Verificación del token de restablecimiento
+        - Actualización de contraseña en la base de datos
+        - Muestra mensajes de éxito y error
+    Componentes:
+        - Campo de correo electrónico (pre-llenado)
+        - Campo de nueva contraseña con validación
+        - Campo de confirmación de contraseña
+        - Token oculto para verificación
+        - Instrucciones de requisitos de contraseña
+        - Botón de restablecimiento
+        - Sección de mensajes de estado y errores
+    Características:
+        - Validación de contraseña robusta (mínimo 8 caracteres, mayúsculas, minúsculas, números)
+        - Prevención de espacios y emojis en contraseñas
+        - Interfaz limpia y centrada
+        - Iconos descriptivos para campos
+        - Mensajes informativos para el usuario
+    Ruta asociada:
+        - POST /restablecer-contrasena (password.update)
+--}}
 <x-login-layout>
     <div class="place-items-center">
         <div class="card w-3/4 max-w-md my-4">

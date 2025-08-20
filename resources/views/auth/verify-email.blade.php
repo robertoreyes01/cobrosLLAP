@@ -1,3 +1,33 @@
+{{--
+    Vista: Verificación de Correo Electrónico
+    Ubicación: resources/views/auth/verify-email.blade.php
+    Descripción:
+        Vista que se muestra a usuarios que han completado el registro pero aún no han
+        verificado su correo electrónico. Proporciona instrucciones y opciones para
+        completar el proceso de verificación.
+    Variables esperadas:
+        - Ninguna variable específica requerida
+    Funcionalidad:
+        - Informa al usuario sobre la necesidad de verificar su correo
+        - Permite reenviar el enlace de verificación
+        - Proporciona opción para cerrar sesión
+        - Guía al usuario en el proceso de verificación
+    Componentes:
+        - Mensaje informativo sobre verificación de correo
+        - Icono de email para contexto visual
+        - Formulario para reenviar enlace de verificación
+        - Botón para cerrar sesión
+        - Diseño centrado y responsivo
+    Características:
+        - Interfaz limpia y profesional
+        - Mensajes claros y orientativos
+        - Opciones de acción para el usuario
+        - Diseño responsivo para diferentes dispositivos
+        - Integración con sistema de verificación de Laravel
+    Rutas asociadas:
+        - POST /email/verification-notification (verification.resend)
+        - POST /logout (logout)
+--}}
 <x-app-layout>
     <div class="min-h-screen flex items-center justify-center bg-gray-50 py-12 px-4 sm:px-6 lg:px-8">
         <div class="max-w-md w-full space-y-8">

@@ -1,3 +1,36 @@
+{{--
+    Vista: Formulario de Login
+    Ubicación: resources/views/auth/login.blade.php
+    Descripción:
+        Vista principal de autenticación que permite a los usuarios iniciar sesión
+        en el sistema de gestión de pagos y cobros.
+    Variables esperadas:
+        - $errors: Illuminate\Support\ViewErrorBag | Errores de validación si existen
+        - session('status'): string | Mensaje de estado (ej: confirmación de registro)
+        - old('remember'): boolean | Estado del checkbox "recordarme"
+    Funcionalidad:
+        - Formulario de autenticación con correo y contraseña
+        - Opción "recordarme" para mantener sesión activa
+        - Validación de credenciales en el servidor
+        - Redirección a recuperación de contraseña
+        - Muestra mensajes de error y estado
+    Componentes:
+        - Formulario de login con campos de correo y contraseña
+        - Iconos SVG para campos de entrada
+        - Checkbox para opción "recordarme"
+        - Botón de envío del formulario
+        - Enlace para recuperación de contraseña
+        - Sección de mensajes de estado y errores
+    Características:
+        - Interfaz centrada y responsiva
+        - Validación visual con iconos descriptivos
+        - Mensajes informativos para el usuario
+        - Integración con sistema de autenticación de Laravel
+        - Soporte para sesiones persistentes
+    Rutas asociadas:
+        - POST /login (login)
+        - GET /olvidar-contrasena (password.request)
+--}}
 <x-login-layout>
     <div class="container" style="padding-top: 20px; width: 500px; align-items: center;">
         <div class="mb-4">
