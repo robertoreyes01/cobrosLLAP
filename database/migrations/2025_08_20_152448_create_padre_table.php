@@ -13,11 +13,10 @@ return new class extends Migration
     {
         Schema::disableForeignKeyConstraints();
 
-        Schema::create('seccion', function (Blueprint $table) {
-            $table->increments('id_seccion');
-            $table->string('nombre', 20);
-            $table->decimal('matricula');
-            $table->decimal('mensualidad');
+        Schema::create('padre', function (Blueprint $table) {
+            $table->increments('id_padre');
+            $table->unsignedInteger('id_usuario')->index()->nullable()->default('DEFAULT NULL');
+            $table->unsignedInteger('id_alumno')->index()->nullable()->default('DEFAULT NULL');
         });
 
         Schema::enableForeignKeyConstraints();
@@ -28,6 +27,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('seccion');
+        Schema::dropIfExists('padre');
     }
 };

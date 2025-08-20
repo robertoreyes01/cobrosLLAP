@@ -10,7 +10,6 @@ use App\Models\usuario;
 use App\Models\padre;
 use Devrabiul\ToastMagic\Facades\ToastMagic;
 use Illuminate\Validation\ValidationException;
-use Illuminate\Auth\Events\Registered;
 
 class LoginController extends Controller
 {
@@ -96,7 +95,6 @@ class LoginController extends Controller
         $padre->id_usuario = $usuario->id_usuario;
         $padre->save();
 
-        // Send verification email explicitly
         $usuario->sendEmailVerificationNotification();
 
         ToastMagic::info('Por favor revisa tu correo');

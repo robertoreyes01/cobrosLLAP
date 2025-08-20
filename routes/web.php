@@ -10,7 +10,12 @@ use App\Http\Controllers\Admin\StudentController;
 use App\Http\Controllers\Admin\PriceController;
 use App\Http\Controllers\Admin\AccountController;
 use Illuminate\Foundation\Auth\EmailVerificationRequest;
+use App\Models\usuario;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Password;
+use Illuminate\Auth\Events\PasswordReset;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Str;
 
 Route::get('/', function () {
     return view('auth.login');
@@ -37,6 +42,58 @@ Route::post('/email/verification-notification', function (Request $request) {
  
     return back()->with('message', 'Se ha enviado un nuevo enlace de verificación a tu correo electrónico.');
 })->middleware(['auth:usuario', 'throttle:6,1'])->name('verification.resend');
+
+Route::get('/olvidar-contrasena', function () {
+    return view('auth.forgot-password');
+})->middleware('guest')->name('password.request');
+ 
+Route::post('/olvidar-contrasena', function (Request $request) {
+    $request->validate(['correo' => 'required|email']);
+ 
+    $status = Password::sendResetLink(
+        $request->only('correo')
+    );
+ 
+    return $status === Password::ResetLinkSent
+        ? back()->with(['status' => __($status)])
+        : back()->withErrors(['correo' => __($status)]);
+})->middleware('guest')->name('password.email');
+
+Route::get('/restablecer-contrasena/{token}', function (string $token) {
+    return view('auth.reset-password', ['token' => $token]);
+})->middleware('guest')->name('password.reset');
+
+Route::post('/restablecer-contrasena', function (Request $request) {
+    $request->validate([
+        'token' => 'required',
+        'correo' => 'required|email',
+        'password' => [
+                'required',
+                'min:8',
+                'confirmed',
+                'regex:/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?!.*\s)(?!.*[\x{1F600}-\x{1F64F}])(?!.*[\x{1F300}-\x{1F5FF}])(?!.*[\x{1F680}-\x{1F6FF}])(?!.*[\x{1F1E0}-\x{1F1FF}])(?!.*[\x{2600}-\x{26FF}])(?!.*[\x{2700}-\x{27BF}])/u'
+            ],
+    ], [
+        'password.regex' => 'La contraseña debe contener al menos una mayúscula, una minúscula, un número y no puede contener espacios o emojis.'
+    ]);
+ 
+    $status = Password::reset(
+        $request->only('correo', 'password', 'password_confirmation', 'token'),
+        function (usuario $user, string $password) {
+            $user->forceFill([
+                'password' => Hash::make($password)
+            ])->setRememberToken(Str::random(60));
+ 
+            $user->save();
+ 
+            event(new PasswordReset($user));
+        }
+    );
+ 
+    return $status === Password::PasswordReset
+        ? redirect()->route('loginForm')->with('status', __($status))
+        : back()->withErrors(['correo' => [__($status)]]);
+})->middleware('guest')->name('password.update');
 
 Route::middleware(['auth:usuario', 'verified'])->group(function(){
     Route::get('menu-principal', [MainController::class, 'show'])->name('main');

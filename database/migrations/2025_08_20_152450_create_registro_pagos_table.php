@@ -16,7 +16,7 @@ return new class extends Migration
         Schema::create('registro_pagos', function (Blueprint $table) {
             $table->increments('id_registro');
             $table->string('descripcion', 100);
-            $table->decimal('total');
+            $table->decimal('total', 8, 2);
             $table->date('fecha');
             $table->string('lugar', 50);
             $table->unsignedInteger('id_alumno')->index();

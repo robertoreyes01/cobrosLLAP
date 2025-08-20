@@ -40,7 +40,14 @@
                 type="submit">Iniciar sesión
             </button>
         </form>
-        <button class="btn-link m-0 p-0">¿Olvidaste tu contraseña?</button>
+        <button class="btn-link m-0 p-0" onclick="window.location.href='{{ route('password.request') }}'">¿Olvidaste tu contraseña?</button>
+
+        @if (session('status'))
+            <div class="mb-6 p-4 bg-green-50 border border-green-200 rounded-md">
+                <p class="text-sm text-green-600">{{ session('status') }}</p>
+            </div>
+        @endif
+
         @if ($errors->any())
             <div class="mb-6 p-4 bg-red-50 border border-red-200 rounded-md">
                 <h2 class="text-base font-semibold text-red-700 mb-2">Error</h2>
@@ -51,5 +58,6 @@
                 </ul>
             </div>
         @endif
+
     </div>
 </x-login-layout>
