@@ -1,5 +1,43 @@
 <?php
 
+/**
+ * Archivo de Rutas Web - Sistema de Gestión de Pagos y Cobros LLAP
+ * 
+ * Este archivo define todas las rutas web de la aplicación, organizadas por funcionalidad
+ * y nivel de acceso según el rol del usuario autenticado.
+ * 
+ * Estructura de Rutas:
+ * 
+ * 1. Rutas Públicas (Sin Autenticación):
+ *    - Login y registro de usuarios
+ *    - Verificación de email
+ *    - Recuperación de contraseña
+ * 
+ * 2. Rutas Protegidas (Con Autenticación):
+ *    - Menú principal y perfil de usuario
+ *    - Gestión de pagos (roles 1,2,3)
+ *    - Gestión de cobros y estudiantes (roles 1,2)
+ *    - Gestión administrativa completa (rol 1)
+ * 
+ * Middleware Utilizados:
+ * - auth:usuario: Verifica autenticación con guard personalizado
+ * - verified: Requiere verificación de email
+ * - check.user.type: Verifica rol específico del usuario
+ * - guest: Solo para usuarios no autenticados
+ * - signed: Verifica firma de URL para verificación
+ * - throttle: Limita intentos de envío de emails
+ * 
+ * Controladores Utilizados:
+ * - LoginController: Autenticación y registro
+ * - MainController: Vista principal
+ * - ProfileController: Gestión de perfil
+ * - PaymentController: Gestión de pagos
+ * - ChargesController: Gestión de cobros
+ * - StudentController: Gestión de estudiantes
+ * - PriceController: Gestión de precios
+ * - AccountController: Gestión de cuentas
+ */
+
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Payments\PaymentController;
@@ -27,6 +65,7 @@ Route::post('logout', [LoginController::class, 'logout'])->name('logout');
 Route::get('signIn', [LoginController::class, 'signInForm'])->name('signInForm');
 Route::post('signIn', [LoginController::class, 'signIn'])->name('signIn');
 
+// Rutas de verificación de email
 Route::get('/email/verify', function () {
     return view('auth.verify-email');
 })->middleware('auth:usuario')->name('verification.notice');
@@ -43,6 +82,7 @@ Route::post('/email/verification-notification', function (Request $request) {
     return back()->with('message', 'Se ha enviado un nuevo enlace de verificación a tu correo electrónico.');
 })->middleware(['auth:usuario', 'throttle:6,1'])->name('verification.resend');
 
+// Rutas de recuperación de contraseña
 Route::get('/olvidar-contrasena', function () {
     return view('auth.forgot-password');
 })->middleware('guest')->name('password.request');
@@ -95,6 +135,7 @@ Route::post('/restablecer-contrasena', function (Request $request) {
         : back()->withErrors(['correo' => [__($status)]]);
 })->middleware('guest')->name('password.update');
 
+// Rutas protegidas por autenticación y verificación de email
 Route::middleware(['auth:usuario', 'verified'])->group(function(){
     Route::get('menu-principal', [MainController::class, 'show'])->name('main');
     Route::get('perfil', [ProfileController::class, 'show'])->name('profile.show');

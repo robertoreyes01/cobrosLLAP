@@ -11,13 +11,34 @@ use App\Models\padre;
 use Devrabiul\ToastMagic\Facades\ToastMagic;
 use Illuminate\Validation\ValidationException;
 
+/**
+ * Class LoginController
+ * 
+ * Controlador para la gestión de autenticación del sistema.
+ * Maneja el proceso de login, logout y registro de nuevos usuarios (padres/tutores).
+ * Incluye validación de credenciales, verificación de estado de cuenta y creación
+ * automática de registros relacionados.
+ */
 class LoginController extends Controller
 {
+    /**
+     * Muestra el formulario de login.
+     *
+     * @return \Illuminate\View\View
+     */
     public function LoginForm()
     {
         return view('auth.login');
     }
 
+    /**
+     * Procesa el intento de login del usuario.
+     * Valida credenciales, verifica estado de cuenta y redirige según el resultado.
+     *
+     * @param Request $request
+     * @return \Illuminate\Http\RedirectResponse
+     * @throws ValidationException
+     */
     public function login(Request $request)
     {
         $request->validate([
@@ -47,6 +68,13 @@ class LoginController extends Controller
         ]);
     }
 
+    /**
+     * Cierra la sesión del usuario autenticado.
+     * Invalida la sesión y regenera el token CSRF.
+     *
+     * @param Request $request
+     * @return \Illuminate\Http\RedirectResponse
+     */
     public function logout(Request $request)
     {
         Auth::logout();
@@ -57,11 +85,23 @@ class LoginController extends Controller
         return redirect()->route('loginForm');
     }
 
+    /**
+     * Muestra el formulario de registro para nuevos usuarios.
+     *
+     * @return \Illuminate\View\View
+     */
     public function signInForm()
     {
         return view('auth.signIn');
     }
 
+    /**
+     * Procesa el registro de un nuevo usuario (padre/tutor).
+     * Crea el usuario, el registro padre asociado y envía verificación por email.
+     *
+     * @param Request $request
+     * @return \Illuminate\Http\RedirectResponse
+     */
     public function signIn(Request $request)
     {
         $request->validate([

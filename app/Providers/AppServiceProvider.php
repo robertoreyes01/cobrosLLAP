@@ -7,10 +7,21 @@ use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Support\Facades\URL;
 
+/**
+ * Class AppServiceProvider
+ * 
+ * Proveedor de servicios principal de la aplicación.
+ * Configura servicios globales, personaliza notificaciones de verificación de email
+ * y maneja la configuración de URLs para el sistema de autenticación.
+ * Extiende de ServiceProvider para integrarse con el contenedor de servicios de Laravel.
+ */
 class AppServiceProvider extends ServiceProvider
 {
     /**
-     * Register any application services.
+     * Registra servicios de la aplicación.
+     * Se ejecuta durante el proceso de bootstrap de la aplicación.
+     * 
+     * @return void
      */
     public function register(): void
     {
@@ -18,7 +29,11 @@ class AppServiceProvider extends ServiceProvider
     }
 
     /**
-     * Bootstrap any application services.
+     * Inicializa servicios de la aplicación.
+     * Configura URLs, personaliza notificaciones de verificación de email
+     * y establece configuraciones globales del sistema.
+     * 
+     * @return void
      */
     public function boot(): void
     {
@@ -32,6 +47,10 @@ class AppServiceProvider extends ServiceProvider
             }
         }
 
+        /**
+         * Personaliza la URL de verificación de email.
+         * Crea una URL temporal firmada con expiración de 60 minutos.
+         */
         VerifyEmail::createUrlUsing(function ($notifiable) {
             return URL::temporarySignedRoute(
                 'verification.verify',
@@ -43,6 +62,10 @@ class AppServiceProvider extends ServiceProvider
             );
         });
 
+        /**
+         * Personaliza el contenido del email de verificación.
+         * Traduce los mensajes al español y adapta el contenido para el sistema educativo.
+         */
         VerifyEmail::toMailUsing(function ($notifiable, $url) {
             return (new MailMessage)
                 ->subject('Verificar correo electrónico')

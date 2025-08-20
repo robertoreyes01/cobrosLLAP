@@ -9,13 +9,31 @@ use Illuminate\Support\Facades\Hash;
 use Devrabiul\ToastMagic\Facades\ToastMagic;
 use Illuminate\Support\Str;
 
+/**
+ * Class AccountController
+ * 
+ * Controlador para la gestión de cuentas de usuarios del sistema.
+ * Permite crear, leer, actualizar, eliminar y buscar usuarios, incluyendo la gestión
+ * de estados de cuenta (activo/inactivo) y generación de contraseñas temporales.
+ * Aplica el middleware de autenticación para el guard 'usuario'.
+ */
 class AccountController extends Controller
 {
+    /**
+     * AccountController constructor.
+     * 
+     * Aplica el middleware de autenticación para usuarios.
+     */
     public function __construct()
     {
         $this->middleware('auth:usuario');
     }
 
+    /**
+     * Muestra la vista de gestión de cuentas con todos los usuarios (excepto administradores).
+     *
+     * @return \Illuminate\View\View
+     */
     public function index()
     {
         $accounts = usuario::orderBy('id_rol', 'asc')
@@ -26,6 +44,12 @@ class AccountController extends Controller
         return view('admin.manage_accounts', compact('accounts'));
     }
 
+    /**
+     * Genera una contraseña temporal segura de 8 caracteres.
+     * Incluye al menos una minúscula, una mayúscula y un número.
+     *
+     * @return string
+     */
     private function generateTemporaryPassword()
     {
         $lowercase = 'abcdefghijklmnopqrstuvwxyz';
@@ -47,6 +71,14 @@ class AccountController extends Controller
         return str_shuffle($password);
     }
 
+    /**
+     * Almacena un nuevo empleado en el sistema.
+     * Genera automáticamente una contraseña temporal y asigna rol de empleado.
+     * Envía notificación de verificación por email.
+     *
+     * @param Request $request
+     * @return \Illuminate\Http\RedirectResponse
+     */
     public function store(Request $request)
     {
         $request->validate([
@@ -74,34 +106,58 @@ class AccountController extends Controller
             ->with('success', 'Empleado creado exitosamente. Contraseña temporal: ' . $temporaryPassword);
     }
 
+    /**
+     * Elimina un usuario del sistema permanentemente.
+     *
+     * @param usuario $cuenta
+     * @return \Illuminate\Http\RedirectResponse
+     */
     public function destroy(usuario $cuenta)
     {
         $cuenta->delete();
 
-        ToastMagic::success('Empleado eliminado correctamente');
+        ToastMagic::success('Usuario eliminado correctamente');
         return redirect()->route('accounts.index');
     }
 
+    /**
+     * Desactiva la cuenta de un usuario (cambia estado a 0).
+     *
+     * @param usuario $cuenta
+     * @return \Illuminate\Http\RedirectResponse
+     */
     public function deactivate(usuario $cuenta)
     {
         $cuenta->update(
             ['estado' => '0']
         );
 
-        ToastMagic::success('Empleado desactivado correctamente');
+        ToastMagic::success('Usuario desactivado correctamente');
         return redirect()->route('accounts.index');
     }
 
+    /**
+     * Activa la cuenta de un usuario (cambia estado a 1).
+     *
+     * @param usuario $cuenta
+     * @return \Illuminate\Http\RedirectResponse
+     */
     public function activate(usuario $cuenta)
     {
         $cuenta->update(
             ['estado' => '1']
         );
 
-        ToastMagic::success('Empleado activado correctamente');
+        ToastMagic::success('Usuario activado correctamente');
         return redirect()->route('accounts.index');
     }
 
+    /**
+     * Busca usuarios por nombre o apellido.
+     *
+     * @param Request $request
+     * @return \Illuminate\View\View
+     */
     public function searchAccount(Request $request)
     {
         $request->validate([
