@@ -35,6 +35,12 @@
                     </span>
                 </div>
             </div>
+            <div class="mb-3">
+                <label class="inline-flex items-center">
+                    <input type="checkbox" name="remember" id="remember" class="mr-2" {{ old('remember') ? 'checked' : '' }}>
+                    <span>Recordarme</span>
+                </label>
+            </div>
             <button
                 class="w-full py-2 px-4 rounded bg-[#751711] hover:bg-[#5c120e] text-white font-semibold transition-colors duration-200"
                 type="submit">Iniciar sesión

@@ -51,16 +51,14 @@ class LoginController extends Controller
         $usuario = usuario::where('correo', $credenciales['correo'])->first();
 
         if ($usuario && Hash::check($credenciales['password'], $usuario->password)) {
-            Auth::login($usuario);
-            
-            // Verificar si el login fue exitoso
-            if (Auth::check() && $usuario->estado == '1') {
+
+            if ($usuario->estado == '1') {
+                Auth::login($usuario, $request->boolean('remember'));
                 $request->session()->regenerate();
                 return redirect()->intended(route('main'));
-            } else {
-                Auth::logout();
-                return redirect()->route('loginForm')->with('error', 'Tu cuenta ha sido desactivada');
             }
+            
+            return redirect()->route('loginForm')->with('error', 'Tu cuenta ha sido desactivada');
         }
 
         throw ValidationException::withMessages([
