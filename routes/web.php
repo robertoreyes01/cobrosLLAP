@@ -83,11 +83,11 @@ Route::post('/email/verification-notification', function (Request $request) {
 })->middleware(['auth:usuario', 'throttle:6,1'])->name('verification.resend');
 
 // Rutas de recuperación de contraseña
-Route::get('/olvidar-contrasena', function () {
+Route::get('/forgot-password', function () {
     return view('auth.forgot-password');
 })->middleware('guest')->name('password.request');
  
-Route::post('/olvidar-contrasena', function (Request $request) {
+Route::post('/forgot-password', function (Request $request) {
     $request->validate(['correo' => 'required|email']);
  
     $status = Password::sendResetLink(
@@ -99,11 +99,11 @@ Route::post('/olvidar-contrasena', function (Request $request) {
         : back()->withErrors(['correo' => __($status)]);
 })->middleware('guest')->name('password.email');
 
-Route::get('/restablecer-contrasena/{token}', function (string $token) {
+Route::get('/reset-password/{token}', function (string $token) {
     return view('auth.reset-password', ['token' => $token]);
 })->middleware('guest')->name('password.reset');
 
-Route::post('/restablecer-contrasena', function (Request $request) {
+Route::post('/reset-password', function (Request $request) {
     $request->validate([
         'token' => 'required',
         'correo' => 'required|email',

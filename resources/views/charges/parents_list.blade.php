@@ -19,9 +19,8 @@
 <x-app-layout>
     <div class="relative">
         <div class="absolute top-0 right-0.5">
-            <button
-                class="rounded-sm p-1.5 bg-[#751711] hover:bg-[#5c120e] text-white font-semibold transition-colors duration-200 cursor-pointer shadow-md"
-                onclick="window.location.href='{{ route('charges.students') }}'">
+            <button onclick="window.location.href='{{ route('charges.students') }}'"
+                class="rounded-sm p-1.5 mx-1 bg-[#751711] hover:bg-[#5c120e] text-white font-semibold transition-colors duration-200 cursor-pointer shadow-md">
                 Ver estudiantes
             </button>
         </div>

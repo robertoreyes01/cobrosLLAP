@@ -35,12 +35,12 @@
 --}}
 
 <x-login-layout>
-    <div class="container mx-auto pt-5 w-50">
+    <div class="container mx-auto pt-4 w-50">
         {{-- Título y descripción --}}
         <h1 class="text-2xl font-bold text-center mb-2">Crear Nueva Cuenta</h1>
         <p class="text-center text-gray-500 mb-6">Campos obligatorios <span class="text-red-600">*</span></p>
         {{-- Formulario de registro de usuario --}}
-        <form class="space-y-6 w-full pb-8" method="POST" action="{{ route('signIn') }}">
+        <form class="space-y-6 w-full pb-3" method="POST" action="{{ route('signIn') }}">
             @csrf
             {{-- Nombres --}}
             <div class="grid grid-cols-2 gap-4 mb-4">
@@ -136,6 +136,11 @@
                 class="w-full py-2 px-4 rounded bg-[#751711] text-white hover:bg-[#5c120e] font-semibold transition-colors duration-200"
                 type="submit">Crear Cuenta</button>
         </form>
+
+        <div class="flex justify-center mb-3">
+            <span >¿Ya tienes una cuenta? <button class="btn-link p-0" onclick="window.location.href='{{ route('loginForm') }}'">Iniciar sesión</button></span>
+        </div>
+
         {{-- Muestra errores de validación si existen --}}
         @if ($errors->any())
             <div class="mb-6 p-4 bg-red-50 border border-red-200 rounded-md">

@@ -32,10 +32,10 @@
         - GET /olvidar-contrasena (password.request)
 --}}
 <x-login-layout>
-    <div class="container" style="padding-top: 20px; width: 500px; align-items: center;">
+    <div class="place-items-center pt-4 w-1/3 mx-auto">
         <div class="mb-4">
-            <h2 style="text-align: center;">Bienvenido</h2>
-            <h4 style="text-align: center;">Ingresa tus credenciales</h4>
+            <h2 class="text-center">Bienvenido</h2>
+            <h4 class="text-center">Ingresa tus credenciales</h4>
         </div>
         <form class="form space-y-6 w-full" method="POST" action="{{ route('login') }}">
             @csrf
@@ -68,18 +68,24 @@
                     </span>
                 </div>
             </div>
-            <div class="mb-3">
+            <div class="mb-3 relative">
                 <label class="inline-flex items-center">
                     <input type="checkbox" name="remember" id="remember" class="mr-2" {{ old('remember') ? 'checked' : '' }}>
                     <span>Recordarme</span>
                 </label>
+                <div class="absolute inset-y-0 right-0 flex items-center">
+                    <a href="{{ route('password.request') }}" class="btn-link p-0">¿Olvidaste tu contraseña?</a>
+                </div>
             </div>
             <button
                 class="w-full py-2 px-4 rounded bg-[#751711] hover:bg-[#5c120e] text-white font-semibold transition-colors duration-200"
                 type="submit">Iniciar sesión
             </button>
         </form>
-        <button class="btn-link m-0 p-0" onclick="window.location.href='{{ route('password.request') }}'">¿Olvidaste tu contraseña?</button>
+
+        <div class="flex justify-center mt-4">
+            <span >¿No tienes una cuenta? <button class="btn-link p-0" onclick="window.location.href='{{ route('signInForm') }}'">Regístrate</button></span>
+        </div>
 
         @if (session('status'))
             <div class="mb-6 p-4 bg-green-50 border border-green-200 rounded-md">
