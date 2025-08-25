@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\usuario;
+use App\Models\padre;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Devrabiul\ToastMagic\Facades\ToastMagic;
@@ -114,6 +115,11 @@ class AccountController extends Controller
      */
     public function destroy(usuario $cuenta)
     {
+        $padre = padre::where('id_usuario', $cuenta->id_usuario)->first();
+        if($padre){
+            $padre->delete();
+        }
+
         $cuenta->delete();
 
         ToastMagic::success('Usuario eliminado correctamente');
