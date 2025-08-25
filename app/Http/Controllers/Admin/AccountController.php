@@ -7,6 +7,9 @@ use App\Models\usuario;
 use App\Models\padre;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Facades\Log;
+use App\Mail\TemporaryPasswordMail;
 use Devrabiul\ToastMagic\Facades\ToastMagic;
 use Illuminate\Support\Str;
 
@@ -98,13 +101,22 @@ class AccountController extends Controller
         $usuario->primer_apellido = $request->primer_apellido;
         $usuario->segundo_apellido = $request->segundo_apellido;
         $usuario->correo = $request->correo;
+        $usuario->email_verified_at = now();
         $usuario->password = Hash::make($temporaryPassword);
         $usuario->estado = '1';
         $usuario->id_rol = '2';
         $usuario->save();
 
-        return redirect()->route('accounts.index')
-            ->with('success', 'Empleado creado exitosamente. Contraseña temporal: ' . $temporaryPassword);
+        // Send temporary password email
+        try {
+            Mail::to($usuario->correo)->send(new TemporaryPasswordMail($usuario, $temporaryPassword));
+        } catch (\Exception $e) {
+            // Log the error but don't fail the user creation
+            Log::error('Failed to send temporary password email: ' . $e->getMessage());
+        }
+
+        ToastMagic::success('Usuario creado correctamente. Se ha enviado un correo con la contraseña temporal.');
+        return redirect()->route('accounts.index');
     }
 
     /**

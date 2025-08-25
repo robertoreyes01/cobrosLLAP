@@ -24,6 +24,7 @@ use Illuminate\Auth\Passwords\CanResetPassword;
  * @property string $password        Contraseña hasheada del usuario
  * @property string $estado          Estado del usuario (activo/inactivo)
  * @property int $id_rol             ID de rol asociado al usuario
+ * @property \Carbon\Carbon|null $email_verified_at Timestamp de verificación de email
  */
 class usuario extends Authenticatable implements MustVerifyEmail
 {
