@@ -60,7 +60,7 @@
                 </ul>
             </div>
         @endif
-        <div class="w-auto">
+        <div class="w-150">
             {{-- Tabla de pagos del alumno --}}
             <table class="table">
                 <thead>

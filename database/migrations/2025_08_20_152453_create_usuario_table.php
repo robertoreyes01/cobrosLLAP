@@ -21,7 +21,7 @@ return new class extends Migration
             $table->string('primer_apellido', 20);
             $table->string('segundo_apellido', 20);
             $table->string('correo', 100);
-            $table->timestamp('email_verified_at')->nullable()->default('DEFAULT NULL');
+            $table->timestamp('email_verified_at')->nullable();
             $table->string('password', 225);
             $table->string('remember_token', 100)->nullable();
             $table->tinyInteger('estado');

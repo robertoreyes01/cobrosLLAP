@@ -14,9 +14,9 @@ return new class extends Migration
         Schema::disableForeignKeyConstraints();
 
         Schema::create('password_reset_tokens', function (Blueprint $table) {
-            $table->string('correo', 255)->primary();
+            $table->string('correo', 191)->primary();
             $table->string('token', 255);
-            $table->timestamp('created_at')->nullable()->default('DEFAULT NULL');
+            $table->timestamp('created_at')->nullable();
         });
 
         Schema::enableForeignKeyConstraints();

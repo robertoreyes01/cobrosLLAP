@@ -33,7 +33,7 @@ class UsuarioFactory extends Factory
             'correo' => $this->faker->unique()->safeEmail(),
             'password' => Hash::make('Asdfgh!1'),
             'estado' => $this->faker->randomElement(['1', '0']),
-            'id_rol' => $this->faker->numberBetween(1, 3)
+            'id_rol' => $this->faker->numberBetween(2, 3)
         ];
     }
 

@@ -15,8 +15,8 @@ return new class extends Migration
 
         Schema::create('padre', function (Blueprint $table) {
             $table->increments('id_padre');
-            $table->unsignedInteger('id_usuario')->index()->nullable()->default('DEFAULT NULL');
-            $table->unsignedInteger('id_alumno')->index()->nullable()->default('DEFAULT NULL');
+            $table->unsignedInteger('id_usuario')->index()->nullable();
+            $table->unsignedInteger('id_alumno')->index()->nullable();
         });
 
         Schema::enableForeignKeyConstraints();
