@@ -45,8 +45,7 @@
                 <div class="col-span-2 flex items-center pl-3">
                     <div id="demo-dropdown-menu" class="dropdown-menu">
                         <button type="button" id="demo-dropdown-menu-trigger" aria-haspopup="menu"
-                            aria-controls="demo-dropdown-menu-menu" aria-expanded="false" class="btn-outline"
-                            style="background-color: #751711; border: none;">
+                            aria-controls="demo-dropdown-menu-menu" aria-expanded="false" class="btn-outline bg-[#751711] hover:bg-[#5c120e] border-none">
                             <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 24 24"
                                 fill="none" stroke="#ffffff" stroke-width="2" stroke-linecap="round"
                                 stroke-linejoin="round"
@@ -63,7 +62,7 @@
                             </svg>
                         </button>
                         <div id="demo-dropdown-menu-popover" data-popover aria-hidden="true"
-                            class="bg-[#751711] text-white">
+                            class=" bg-[#751711] text-white">
                             <div role="menu" id="demo-dropdown-menu-menu"
                                 aria-labelledby="demo-dropdown-menu-trigger">
                                 <div role="group" aria-labelledby="account-options">
